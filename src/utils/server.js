@@ -67,10 +67,10 @@ const navMenList  = (callback) => {
 }
 
 //查询文章列表
-const ShowArticleAll = (artId,cateId,articleName,level,callback) =>{
+const ShowArticleAll = (pageIndex,pageSize,artId,cateId,articleName,level,callback) =>{
     if(level == 1){
         //var url = portUrl + 'nav/ActiveClassAllData?art_id='+artId+'&cate_id='+cateId+'&article_name='+articleName;
-        var url = portUrl + 'article/list/1'
+        var url = portUrl + 'article/'+pageIndex+'/'+pageSize;
     }else{
         var url = portUrl + 'article/ShowArticleAll?art_id='+artId+'&cate_id='+cateId+'&article_name='+articleName;
     }
