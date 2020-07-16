@@ -33,7 +33,7 @@
           <i class="fa fa-fw fa-clock-o"></i>
           <span v-html="showInitDate(item.createTime,'all')">{{showInitDate(item.createTime,'all')}}</span> •
           <i class="fa fa-fw fa-eye"></i>
-          {{item.browse_count}} 次围观 •
+          {{item.visits}} 次围观 •
           <i class="fa fa-fw fa-comments"></i>
           活捉 {{item.comment_count}} 条 •
           <span class="rateBox">
@@ -57,35 +57,45 @@
         <a class="tcolors-bg" :href="'#/DetailShare?aid='+item.id" target="_blank">阅读全文>></a>
       </div>
     </el-col>
+
+    <!-- <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="listQuery.current"
+      :limit.sync="listQuery.size"
+      @pagination="getList"
+    /> -->
+  
+
     <!-- <el-col class="viewmore">
       <a v-show="hasMore" class="tcolors-bg" href="javascript:void(0);" @click="addMoreFun">点击加载更多</a>
       <a v-show="!hasMore" class="tcolors-bg" href="javascript:void(0);">暂无更多数据</a>
-    </el-col> -->
-
-<el-col class="viewmore">
-    <el-pagination
-      @size-change="sizeChangeHandle"
-      @current-change="currentChangeHandle"
-      :current-page="pageIndex"
-      :page-sizes="[10, 20, 50, 100]"
-      :page-size="pageSize"
-      :total="totalPage"
-      layout="total, sizes, prev, pager, next, jumper"
-    ></el-pagination>
-    </el-col>
+    </el-col>-->
   </el-row>
 </template>
 
 <script>
 import { ShowArticleAll, ArtClassData, initDate } from "../utils/server.js";
+import { getArticle } from "@/api/article";
+import Pagination from "@/components/Pagination/index";
+import abc from '@/components/myComponets';
+
 export default {
   name: "Share",
+  components: { 'pagination':Pagination,abc },
   data() {
     //选项 / 数据
     return {
-      pageIndex: 1,
-      pageSize: 10,
-      totalPage: 0,
+      listLoading: true,
+      total: 0,
+      listQuery: {
+        current: 1,
+        size: 10,
+        content: undefined,
+        status: undefined,
+        ascs: undefined,
+        descs: undefined
+      },
       artId: 0,
       classId: 0,
       sendId: "",
@@ -119,16 +129,15 @@ export default {
   },
 
   methods: {
-    // 每页数
-    sizeChangeHandle(val) {
-      this.pageSize = val;
-      this.pageIndex = 1;
-      this.getDataList();
-    },
-    // 当前页
-    currentChangeHandle(val) {
-      this.pageIndex = val;
-      this.getDataList();
+    // 获得数据集合
+    getList() {
+      this.listLoading = true;
+      getArticle(this.listQuery).then(response => {
+        this.articleList = response.page.records;
+        console.log(this.articleList);
+        this.total = response.page.total;
+        this.listLoading = false;
+      });
     },
     //事件处理器
     showInitDate: function(oldDate, full) {
@@ -179,20 +188,6 @@ export default {
         that.level,
         result => {
           //console.log(result);
-          if (result && result.code == 0) {
-            if (
-              result.page.records.length > 0 &&
-              result.page.records.length < 10
-            ) {
-              that.hasMore = false;
-            } else {
-              that.hasMore = true;
-            }
-            that.articleList = initpage
-              ? result.page.records
-              : that.articleList.concat(result.page.records);
-            that.totalPage = result.page.total;
-          } 
         }
       );
     },
@@ -216,6 +211,7 @@ export default {
   created() {
     //生命周期函数
     // console.log(this.$route);
+    this.getList();
     var that = this;
     that.routeChange();
   }

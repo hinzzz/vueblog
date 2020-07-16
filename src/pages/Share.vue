@@ -21,6 +21,7 @@ import header from '../components/header.vue'
 import footer from '../components/footer.vue'
 import temSharelist from '../components/temSharelist.vue'
 import temRightlist from '../components/temRightlist.vue'
+
 export default {
 	name: "Share",
 	data() { //选项 / 数据
