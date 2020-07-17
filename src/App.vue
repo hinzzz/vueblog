@@ -154,9 +154,9 @@ a {
     word-break: break-all;
     position: relative;
     background: #fff;
-    padding:15px;
+    padding:0px;
     border-radius: 5px;
-    margin-bottom: 40px;
+    margin-bottom: 5px;
     font-size: 15px;
 }
 .tcommonBox header{
@@ -165,8 +165,8 @@ a {
     word-break: break-all;
 }
 .tcommonBox  header h1{
-    margin: 10px 0;
-    font-size: 25px;
+    margin: 5px 0;
+    font-size: 18px;
     font-weight: 700;
     text-align: center;
     line-height: 30px;

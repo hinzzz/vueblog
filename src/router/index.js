@@ -42,15 +42,23 @@ export default new Router({
 				auth: true
 			},
 			name: 'Share'
-		}, //分类
+		}, //文章列表
 		{
-			path: '/DetailShare',
+			path: '/artilce',
 			component: resolve => require(['../pages/DetailShare.vue'], resolve),
 			meta: {
 				auth: true
 			},
-			name: 'DetailShare'
-		}, //分享详情
+			name: 'detail'
+		}, //文章详情
+		{
+			path: '/category',
+			component: resolve => require(['../pages/Category.vue'], resolve),
+			meta: {
+				auth: true
+			},
+			name: 'category'
+		},
 		{
 			path: '/Reward',
 			component: resolve => require(['../pages/Reward.vue'], resolve),

@@ -17,6 +17,26 @@ export function putArticle(id) {
   })
 }
 
+export function detailArticle(artilceUrl){
+  return request({
+    url: '/'+artilceUrl,
+    method: 'get'
+  })
+}
+
+export function getArtLikeCollect(likeOrCollect,articleId,operFlag){
+  let artLikeCollectUrl = '';
+  if(likeOrCollect==1){
+    artLikeCollectUrl = '/article/likes';
+  }else if(likeOrCollect==2){
+    artLikeCollectUrl = '/article/collects';
+  }
+  return request({
+    url: artLikeCollectUrl+'/'+articleId+'/'+operFlag,
+    method: 'get'
+  })
+}
+
 export function postArticle(data) {
   return request({
     url: '/article',

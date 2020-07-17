@@ -209,23 +209,6 @@ const AboutMeData = (callback) =>{
     }
 }
 
-//文章点击收藏 点击喜欢
-const getArtLikeCollect = (userId,artId,islike,callback) =>{
-    var url = '';
-    if(islike==1){
-        url = portUrl + 'article/getArtLike?user_id='+userId+'&art_id='+artId;
-    }else{
-        url = portUrl + 'article/getArtCollect?user_id='+userId+'&art_id='+artId;
-    }
-    axios.get(url).then(num => {
-        if(num.data.code==1001){
-            callback && callback(num.data.msg);
-        }else{
-            alert("查询失败");
-        }
-    })
-}
-
 //查询赞赏数据
 const AdmireData = (callback) => {
     let url = portUrl + 'outh/AdmireData';

@@ -26,7 +26,7 @@
       </span>
       <header>
         <h1>
-          <a :href="'#/DetailShare?aid='+item.id" target="_blank">{{item.title}}</a>
+          <a v-on:click.stop="toDetailArticle(item.url)">{{item.title}}</a>
         </h1>
         <h2>
           <i class="fa fa-fw fa-user"></i>发表于
@@ -35,27 +35,27 @@
           <i class="fa fa-fw fa-eye"></i>
           {{item.visits}} 次围观 •
           <i class="fa fa-fw fa-comments"></i>
-          活捉 {{item.comment_count}} 条 •
+          评论 {{item.comments}} 条 •
           <span class="rateBox">
             <i class="fa fa-fw fa-heart"></i>
-            {{item.like_count?item.like_count:0}}点赞 •
+            {{item.likes}}点赞 •
             <i class="fa fa-fw fa-star"></i>
-            {{item.collect_count?item.collect_count:0}}收藏
+            {{item.collects}}收藏
           </span>
         </h2>
         <div class="ui label">
-          <a :href="'#/Share?classId='+item.class_id">{{item.cate_name}}</a>
+          <a :href="'#/Share?classId='+item.class_id">分类名称啊</a>
         </div>
       </header>
       <div class="article-content">
         <p style="text-indent:2em;">{{item.description}}</p>
-        <p style="max-height:300px;overflow:hidden;text-align:center;">
+        <p v-show="item.image!=null" style="max-height:300px;overflow:hidden;text-align:center;">
           <img :src="item.image" alt class="maxW" />
         </p>
       </div>
-      <div class="viewdetail">
-        <a class="tcolors-bg" :href="'#/DetailShare?aid='+item.id" target="_blank">阅读全文>></a>
-      </div>
+      <!-- <div class="viewdetail">
+        <a class="tcolors-bg" v-on:click.stop="toDetailArticle(item.url)" target="_blank">阅读全文>></a>
+      </div> -->
     </el-col>
 
     <!-- <pagination
@@ -76,7 +76,7 @@
 
 <script>
 import { ShowArticleAll, ArtClassData, initDate } from "../utils/server.js";
-import { getArticle } from "@/api/article";
+import { getArticle,detailArticle } from "@/api/article";
 import Pagination from "@/components/Pagination/index";
 import abc from '@/components/myComponets';
 
@@ -143,6 +143,10 @@ export default {
     showInitDate: function(oldDate, full) {
       // console.log(oldDate,full);
       return initDate(oldDate, full);
+    },
+    //查看文章
+    toDetailArticle:function(url){
+      this.$router.push({name: "detail", query: {url: url+'.html'}})
     },
     showSearchShowList: function(initpage) {
       //展示数据
@@ -219,6 +223,8 @@ export default {
 </script>
 
 <style>
+.excerpt{border:1px solid #eaeaea;padding:20px 20px 20px 20px;overflow:hidden;background-color:#fff;margin-bottom:-1px;}
+.excerpt .cat{color:#fff;background-color:#45BCF9;padding:3px 6px;font-size:12px;display:inline-block;position:relative;top:-2px;margin-right:6px;}
 /*分享标题*/
 .shareTitle {
   margin-bottom: 40px;
