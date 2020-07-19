@@ -134,6 +134,9 @@ export default {
 </script>
 
 <style>
+a:-webkit-any-link{
+  cursor: pointer;
+}
 .excerpt{border:1px solid #eaeaea;padding:20px 20px 20px 20px;overflow:hidden;background-color:#fff;margin-bottom:-1px;}
 .excerpt .post-linkto{text-align:right;margin-bottom:0;margin-top: 5px;}
 .excerpt-text{padding-left:20px;}
@@ -149,7 +152,7 @@ export default {
 .excerpt .cat i{position:absolute;top:50%;margin-top:-4px;right:-4px;display:inline-block;width:0;height:0;vertical-align:middle;border-left:4px solid #45BCF9;border-top:4px solid transparent;border-bottom:4px solid transparent;}
 .excerpt h2{display:inline;font-size:18px;line-height:1.4;margin-top:0;font-weight:bold;}
 .excerpt h2 a{color:#555;}
-.excerpt h2 a:hover{color:#45B6F7;}
+.excerpt h2 a:hover{color:#45B6F7;cursor: pointer;}
 .excerpt h2 a span{color:#FF5E52;}
 .excerpt h2 a:hover span{color:#45B6F7;}
 .excerpt time,
