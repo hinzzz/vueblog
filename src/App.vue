@@ -427,8 +427,9 @@ a {
     left:-32px;
     border-radius: 0 4px 4px 0;
     padding:7px 11.2px 7px 32px;
-    display: inline-block;
+    
     color:#fff;
+    float:left;
 }
 .ui.label::after{
     position: absolute;

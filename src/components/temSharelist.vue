@@ -14,75 +14,64 @@
         </li>
       </ul>
     </div>
+
+    
     <el-col
       :span="24"
       class="s-item tcommonBox"
       v-for="(item,index) in articleList"
       :key="'article'+index"
     >
-      <span class="s-round-date">
-        <span class="month" v-html="showInitDate(item.createTime,'month')+'月'"></span>
-        <span class="day" v-html="showInitDate(item.createTime,'date')"></span>
-      </span>
+
+    <div class="excerpt excerpt-1 excerpt-text"> 
       <header>
-        <h1>
-          <a v-on:click.stop="toDetailArticle(item.url)">{{item.title}}</a>
-        </h1>
+        <a class="cat" href="http://cmsblogs.com/?cat=436">
+         {{item.category.name}}
+          <i></i>
+        </a>
         <h2>
-          <i class="fa fa-fw fa-user"></i>发表于
-          <i class="fa fa-fw fa-clock-o"></i>
-          <span v-html="showInitDate(item.createTime,'all')">{{showInitDate(item.createTime,'all')}}</span> •
-          <i class="fa fa-fw fa-eye"></i>
-          {{item.visits}} 次围观 •
-          <i class="fa fa-fw fa-comments"></i>
-          评论 {{item.comments}} 条 •
-          <span class="rateBox">
-            <i class="fa fa-fw fa-heart"></i>
-            {{item.likes}}点赞 •
-            <i class="fa fa-fw fa-star"></i>
-            {{item.collects}}收藏
-          </span>
+          <a
+            v-on:click.stop="toDetailArticle(item.url)"
+            :title="item.title"
+          >{{item.title}}</a>
         </h2>
-        <div class="ui label">
-          <a :href="'#/Share?classId='+item.class_id">分类名称啊</a>
-        </div>
       </header>
-      <div class="article-content">
-        <p style="text-indent:2em;">{{item.description}}</p>
-        <p v-show="item.image!=null" style="max-height:300px;overflow:hidden;text-align:center;">
-          <img :src="item.image" alt class="maxW" />
-        </p>
-      </div>
-      <!-- <div class="viewdetail">
-        <a class="tcolors-bg" v-on:click.stop="toDetailArticle(item.url)" target="_blank">阅读全文>></a>
-      </div> -->
+      <p class="meta">
+        <time>
+          <i class="fa fa-clock-o"></i>{{showInitDate(item.createTime,'all')}}
+        </time>
+        <span class="author">
+          <i class="fa fa-user"></i>
+          <a href="http://cmsblogs.com/?author=1">hinz</a>
+        </span>
+        <span class="pv">
+          <i class="fa fa-eye"></i>阅读({{item.visits}})
+        </span>
+        <a class="pc" href="http://cmsblogs.com/?p=18352#respond">
+          <i class="fa fa-comments-o"></i>评论({{item.comments}})
+        </a>
+        <a href="javascript:;" etap="like" class="post-like" data-pid="18352">
+          <i class="fa fa-thumbs-o-up"></i>赞(
+          <span>{{item.likes}}</span>)
+        </a>
+      </p>
+      <p
+        class="note"
+      >{{item.description}}</p>
+    </div>
     </el-col>
-
-    <!-- <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="listQuery.current"
-      :limit.sync="listQuery.size"
-      @pagination="getList"
-    /> -->
-  
-
-    <!-- <el-col class="viewmore">
-      <a v-show="hasMore" class="tcolors-bg" href="javascript:void(0);" @click="addMoreFun">点击加载更多</a>
-      <a v-show="!hasMore" class="tcolors-bg" href="javascript:void(0);">暂无更多数据</a>
-    </el-col>-->
   </el-row>
 </template>
 
 <script>
 import { ShowArticleAll, ArtClassData, initDate } from "../utils/server.js";
-import { getArticle,detailArticle } from "@/api/article";
+import { getArticle, detailArticle } from "@/api/article";
 import Pagination from "@/components/Pagination/index";
-import abc from '@/components/myComponets';
+import abc from "@/components/myComponets";
 
 export default {
   name: "Share",
-  components: { 'pagination':Pagination,abc },
+  components: { pagination: Pagination, abc },
   data() {
     //选项 / 数据
     return {
@@ -96,34 +85,9 @@ export default {
         ascs: undefined,
         descs: undefined
       },
-      artId: 0,
-      classId: 0,
-      sendId: "",
-      className: "",
       sonclassList: "", //二级分类
       classtwoId: 5,
       keywords: "",
-      hasMore: true,
-      level: 1,
-      shareClass: [
-        {
-          classId: 1,
-          name: "技术分享",
-          detshare: [
-            { classId: 5, name: "移动端H5", pid: 1 },
-            { classId: 6, name: "pc端web", pid: 1 },
-            { classId: 7, name: "小程序", pid: 1 },
-            { classId: 8, name: "php", pid: 1 },
-            { classId: 9, name: "nodejs", pid: 1 },
-            { classId: 10, name: "软件", pid: 1 },
-            { classId: 11, name: "其他", pid: 1 }
-          ]
-        },
-        { classId: 2, name: "闲言碎语" },
-        { classId: 3, name: "事件簿" },
-        { classId: 4, name: "创作集" }
-      ],
-      queryClass: 1,
       articleList: ""
     };
   },
@@ -145,63 +109,10 @@ export default {
       return initDate(oldDate, full);
     },
     //查看文章
-    toDetailArticle:function(url){
-      this.$router.push({name: "detail", query: {url: url+'.html'}})
-    },
-    showSearchShowList: function(initpage) {
-      //展示数据
-      var that = this;
-      that.classId =
-        that.$route.query.classId == undefined
-          ? 0
-          : parseInt(that.$route.query.classId); //获取传参的classId
-      that.keywords = that.$store.state.keywords; //获取传参的keywords
-      that.classtwoId =
-        that.$route.query.classtwoId == undefined
-          ? ""
-          : parseInt(that.$route.query.classtwoId); //获取传参的classtwoId
-      that.sendId = that.classtwoId ? that.classtwoId : that.classId;
-      that.level = that.keywords ? 0 : that.classtwoId ? 0 : 1;
-      // console.log(that.classId);
-      ArtClassData(function(msg) {
-        // console.log(msg);
-        that.shareClass = msg;
-      });
-      //判断当前显示的分类名称 以及子分类
-      for (var i = 0; i < that.shareClass.length; i++) {
-        if (that.classId == that.shareClass[i].class_id) {
-          that.className = that.shareClass[i].cate_name;
-          if (
-            that.shareClass[i].ChildsSon &&
-            that.shareClass[i].ChildsSon.length > 0
-          ) {
-            that.sonclassList = that.shareClass[i].ChildsSon;
-          } else {
-            that.sonclassList = "";
-          }
-        }
-      }
-      //初始化 文章id为0开始
-      that.artId = initpage ? 0 : that.artId;
-      ShowArticleAll(
-        that.pageIndex,
-        that.pageSize,
-        that.artId,
-        that.sendId,
-        that.keywords,
-        that.level,
-        result => {
-          //console.log(result);
-        }
-      );
-    },
-    addMoreFun: function() {
-      //查看更多
-      this.showSearchShowList(false);
+    toDetailArticle: function(url) {
+      this.$router.push({ name: "detail", query: { url: url + ".html" } });
     },
     routeChange: function() {
-      var that = this;
-      this.showSearchShowList(true);
     }
   },
   components: {
@@ -224,7 +135,34 @@ export default {
 
 <style>
 .excerpt{border:1px solid #eaeaea;padding:20px 20px 20px 20px;overflow:hidden;background-color:#fff;margin-bottom:-1px;}
+.excerpt .post-linkto{text-align:right;margin-bottom:0;margin-top: 5px;}
+.excerpt-text{padding-left:20px;}
+.excerpt-text .note{margin-bottom:0;}
+.excerpt-1{border-radius:4px 4px 0 0}
+.excerpt-10{border-radius:0 0 4px 4px}
+.excerpt:hover{background-color:#f9f9f9;position:relative;z-index:2;}
+.excerpt .focus{float:left;margin-left:-235px;width:0px;height: 0px}
+.excerpt .thumb{width:220px;height:150px;}
+.excerpt header{margin-bottom:10px;}
 .excerpt .cat{color:#fff;background-color:#45BCF9;padding:3px 6px;font-size:12px;display:inline-block;position:relative;top:-2px;margin-right:6px;}
+.excerpt .cat:hover{opacity:0.85;filter:alpha(opacity=85);}
+.excerpt .cat i{position:absolute;top:50%;margin-top:-4px;right:-4px;display:inline-block;width:0;height:0;vertical-align:middle;border-left:4px solid #45BCF9;border-top:4px solid transparent;border-bottom:4px solid transparent;}
+.excerpt h2{display:inline;font-size:18px;line-height:1.4;margin-top:0;font-weight:bold;}
+.excerpt h2 a{color:#555;}
+.excerpt h2 a:hover{color:#45B6F7;}
+.excerpt h2 a span{color:#FF5E52;}
+.excerpt h2 a:hover span{color:#45B6F7;}
+.excerpt time,
+.excerpt .pv,
+.excerpt .pc,
+.excerpt .author{margin-right:20px;}
+.excerpt .post-like{float: right;}
+.excerpt .note{font-size:12px;color:#999;word-wrap:break-word;line-height:20px;margin-bottom: 0;}
+.excerpt .meta{color:#999;font-size:12px;margin-bottom:10px;}
+.excerpt .meta .fa{margin-right:4px;}
+.excerpt .meta a{color:#999;}
+.excerpt .meta a:hover{color:#45B6F7;}
+body{font-family: 'Microsoft Yahei';color: #555;}
 /*分享标题*/
 .shareTitle {
   margin-bottom: 40px;
@@ -264,7 +202,4 @@ export default {
   font-size: 15px;
 }
 
-/*.sharelistBox .viewmore a:hover,.s-item .viewdetail a:hover{
-        background: #48456C;
-    }*/
 </style>
