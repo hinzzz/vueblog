@@ -24,7 +24,8 @@
         </span>
       </h2>
     </header>
-    <div class="article-content" v-html="detailObj.content"></div>
+    <!-- <div  class="article-content" v-html="detailObj.content"></div> -->
+    <md-html :content="detailObj.content"></md-html>
     <div class="dshareBox bdsharebuttonbox" data-tag="share_1">
       分享到:
       <a href="javascript:void(0);" class="ds-weibo fa fa-fw fa-weibo" data-cmd="tsina"></a>
@@ -75,7 +76,13 @@ import {
   initDate
 } from "../utils/server.js";
 import { detailArticle,getArtLikeCollect } from "@/api/article";
+import mdHtml from "../components/mdHtml.vue"
+
 export default {
+  components: {
+    //定义组件
+    'md-html':mdHtml
+  },
   data() {
     //选项 / 数据
     return {
@@ -90,9 +97,9 @@ export default {
     };
   },
   methods: {
-    //事件处理器
+    
+    //年月日的编辑
     showInitDate: function(date, full) {
-      //年月日的编辑
       return initDate(date, full);
     },
     likecollectHandle: function(islike) {
@@ -164,9 +171,6 @@ export default {
   watch: {
     // 如果路由有变化，会再次执行该方法
     $route: "routeChange"
-  },
-  components: {
-    //定义组件
   },
   created() {
     //生命周期函数
@@ -364,4 +368,10 @@ export default {
 .bd_weixin_popup {
   position: fixed !important;
 }
+
+
+
+
+
+
 </style>

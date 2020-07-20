@@ -84,12 +84,15 @@
         <div v-else :class="gotoTop?'toTophui hidden':'toTophui goTophui hidden'" @click="toTopfun">
             <img :src="this.$store.state.themeObj.right_img?this.$store.state.themeObj.right_img:'static/img/scroll.png'" alt="">
         </div>
+        <!-- <article-nav></article-nav> -->
     </div>
+    
 </template>
 
 
 <script>
 import {ShowBrowseCount,ShowArtCommentCount,showLikeData,GetLike} from '../utils/server.js'
+import articleNav from "../components/articleNav.vue"
     export default {
         data() { //选项 / 数据
             return {
@@ -156,7 +159,7 @@ import {ShowBrowseCount,ShowArtCommentCount,showLikeData,GetLike} from '../utils
             },
         },
         components: { //定义组件
-
+            'article-nav':articleNav
         },
         created() { //生命周期函数
             var that = this;
