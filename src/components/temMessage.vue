@@ -1,42 +1,8 @@
 <!-- 留言评论模块 -->
 <template>
   <div class="tmsgBox" ref="tmsgBox">
-    <div class="tmsg-respond" ref="respondBox">
-      <h3>
-        发表评论
-        <small v-show="isRespond" class="tcolorm" @click="removeRespond">取消回复</small>
-      </h3>
-      <form class>
-        <el-input type="textarea" :rows="2" placeholder="说点什么呢``" v-model="textarea"></el-input>
-        <div :class="pBody?'OwO':'OwO OwO-open'">
-          <div class="OwO-logo" @click="pBody=!pBody">
-            <span>OwO表情</span>
-          </div>
-          <div class="OwO-body">
-            <ul class="OwO-items OwO-items-show">
-              <li
-                class="OwO-item"
-                v-for="(oitem,index) in OwOlist"
-                :key="'oitem'+index"
-                @click="choseEmoji(oitem.title)"
-              >
-                <img :src="'static/img/emot/image/'+oitem.url" alt />
-              </li>
-            </ul>
-            <div class="OwO-bar">
-              <ul class="OwO-packages">
-                <li class="OwO-package-active">Emoji</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <el-row class="tmsg-r-info">
-          <el-col :span="24" class="info-submit">
-            <p class="tcolors-bg" @click="sendMsg">{{sendTip}}</p>
-          </el-col>
-        </el-row>
-      </form>
-    </div>
+    <comment_editor></comment_editor>
+
     <div class="tmsg-comments" ref="listDom">
       <a href="#" class="tmsg-comments-tip">活捉 {{commentList?commentList.length:0}} 条</a>
       <div class="tmsg-commentshow">
@@ -44,10 +10,12 @@
           <li class="tmsg-c-item" v-for="(item,index) in commentList" :key="'common'+index">
             <article class>
               <header>
-                <img :src="'https://secure.gravatar.com/avatar/'+item.emailMd5" :onerror="$store.state.errorImg" />
+                <img
+                  :src="'https://secure.gravatar.com/avatar/'+item.emailMd5"
+                  :onerror="$store.state.errorImg"
+                />
                 <div class="i-name">{{item.author}}</div>
-                <div class="i-class">{{item.label}}
-                </div>
+                <div class="i-class">{{item.label}}</div>
                 <div class="i-time">
                   <time>{{showInitDate(item.createTime,'all')}}</time>
                 </div>
@@ -55,10 +23,16 @@
               <section>
                 <p v-html="analyzeEmoji(item.content)">{{analyzeEmoji(item.content)}}</p>
                 <div
+                  :id="item.id"
                   v-if="haslogin"
                   class="tmsg-replay"
-                  @click="respondMsg(item.id,item.comidment_id)"
-                >回复</div>
+                  @click="respondMsg(item.id)"
+                >{{item.id==parentId?"取消回复":"回复"}}</div>
+                <comment_editor
+                  v-show="item.id==parentId"
+                  :parentId="item.id"
+                  :articleId="item.articleId"
+                ></comment_editor>
               </section>
             </article>
             <comment-list-data :item="item"></comment-list-data>
@@ -80,11 +54,15 @@ import {
   initDate
 } from "../utils/server.js";
 import { getComment } from "../api/comment.js";
-import commentListData from "../components/commentList.vue"
+import commentListData from "../components/commentList.vue";
+import commentEditor from "../components/commentEditor.vue";
+
 export default {
   data() {
     //选项 / 数据
     return {
+      hasMore: false,
+      parentId: 0, //正在回复的评论
       total: 0,
       listQuery: {
         current: 1,
@@ -103,96 +81,14 @@ export default {
       pBody: true, //表情打开控制
       commentList: "", //评论列表数据
       pageId: 0, //当前第几页
-      aid: 0, //文章id
-      hasMore: true,
       haslogin: false,
-      userId: "", //用户id
-      leaveId: 0, //回复评论的当前的commentId
-      leavePid: "", //赞赏等其他模块的分类id
-      pid: "", //回复评论的一级commentId
-      sendTip: "发送~",
-      OwOlist: [
-        //表情包和表情路径
-        { title: "微笑", url: "weixiao.gif" },
-        { title: "嘻嘻", url: "xixi.gif" },
-        { title: "哈哈", url: "haha.gif" },
-        { title: "可爱", url: "keai.gif" },
-        { title: "可怜", url: "kelian.gif" },
-        { title: "挖鼻", url: "wabi.gif" },
-        { title: "吃惊", url: "chijing.gif" },
-        { title: "害羞", url: "haixiu.gif" },
-        { title: "挤眼", url: "jiyan.gif" },
-        { title: "闭嘴", url: "bizui.gif" },
-        { title: "鄙视", url: "bishi.gif" },
-        { title: "爱你", url: "aini.gif" },
-        { title: "泪", url: "lei.gif" },
-        { title: "偷笑", url: "touxiao.gif" },
-        { title: "亲亲", url: "qinqin.gif" },
-        { title: "生病", url: "shengbing.gif" },
-        { title: "太开心", url: "taikaixin.gif" },
-        { title: "白眼", url: "baiyan.gif" },
-        { title: "右哼哼", url: "youhengheng.gif" },
-        { title: "左哼哼", url: "zuohengheng.gif" },
-        { title: "嘘", url: "xu.gif" },
-        { title: "衰", url: "shuai.gif" },
-        { title: "吐", url: "tu.gif" },
-        { title: "哈欠", url: "haqian.gif" },
-        { title: "抱抱", url: "baobao.gif" },
-        { title: "怒", url: "nu.gif" },
-        { title: "疑问", url: "yiwen.gif" },
-        { title: "馋嘴", url: "chanzui.gif" },
-        { title: "拜拜", url: "baibai.gif" },
-        { title: "思考", url: "sikao.gif" },
-        { title: "汗", url: "han.gif" },
-        { title: "困", url: "kun.gif" },
-        { title: "睡", url: "shui.gif" },
-        { title: "钱", url: "qian.gif" },
-        { title: "失望", url: "shiwang.gif" },
-        { title: "酷", url: "ku.gif" },
-        { title: "色", url: "se.gif" },
-        { title: "哼", url: "heng.gif" },
-        { title: "鼓掌", url: "guzhang.gif" },
-        { title: "晕", url: "yun.gif" },
-        { title: "悲伤", url: "beishang.gif" },
-        { title: "抓狂", url: "zhuakuang.gif" },
-        { title: "黑线", url: "heixian.gif" },
-        { title: "阴险", url: "yinxian.gif" },
-        { title: "怒骂", url: "numa.gif" },
-        { title: "互粉", url: "hufen.gif" },
-        { title: "书呆子", url: "shudaizi.gif" },
-        { title: "愤怒", url: "fennu.gif" },
-        { title: "感冒", url: "ganmao.gif" },
-        { title: "心", url: "xin.gif" },
-        { title: "伤心", url: "shangxin.gif" },
-        { title: "猪", url: "zhu.gif" },
-        { title: "熊猫", url: "xiongmao.gif" },
-        { title: "兔子", url: "tuzi.gif" },
-        { title: "喔克", url: "ok.gif" },
-        { title: "耶", url: "ye.gif" },
-        { title: "棒棒", url: "good.gif" },
-        { title: "不", url: "no.gif" },
-        { title: "赞", url: "zan.gif" },
-        { title: "来", url: "lai.gif" },
-        { title: "弱", url: "ruo.gif" },
-        { title: "草泥马", url: "caonima.gif" },
-        { title: "神马", url: "shenma.gif" },
-        { title: "囧", url: "jiong.gif" },
-        { title: "浮云", url: "fuyun.gif" },
-        { title: "给力", url: "geili.gif" },
-        { title: "围观", url: "weiguan.gif" },
-        { title: "威武", url: "weiwu.gif" },
-        { title: "话筒", url: "huatong.gif" },
-        { title: "蜡烛", url: "lazhu.gif" },
-        { title: "蛋糕", url: "dangao.gif" },
-        { title: "发红包", url: "fahongbao.gif" }
-      ]
+      userId: "" //用户id
     };
   },
   methods: {
     //事件处理器
     //选择表情包
     showInitDate: function(oldDate, full) {
-      // console.log(oldDate,full);
       return initDate(oldDate, full);
     },
     choseEmoji: function(inner) {
@@ -217,7 +113,6 @@ export default {
             '<img src="static/img/emot/image/' + src + '"/>'
           );
         }
-        // console.log(str);
       }
       return str;
     },
@@ -227,7 +122,6 @@ export default {
       if (this.textarea) {
         this.sendTip = "咻~~";
         if (this.leaveId == 0) {
-          //   console.log(this.textarea,this.userId,this.aid,this.leavePid,this.pid);
           setArticleComment(
             this.textarea,
             this.userId,
@@ -235,7 +129,6 @@ export default {
             this.leavePid,
             this.pid,
             function(msg) {
-              //   console.log(msg);
               this.textarea = "";
               this.routeChange();
               this.removeRespond();
@@ -255,7 +148,6 @@ export default {
             this.leavePid,
             this.pid,
             function(msg) {
-              //   console.log(msg);
               this.textarea = "";
               this.removeRespond();
               this.routeChange();
@@ -270,17 +162,11 @@ export default {
         }, 3000);
       }
     },
-    respondMsg: function(leavePid, pid) {
+    respondMsg: function(parentId) {
       //回复留言
-      // console.log(leavePid,pid);
-
+      this.parentId = this.parentId == 0 ? parentId : 0;
       if (localStorage.getItem("userInfo")) {
-        var dom = event.currentTarget;
-        dom = dom.parentNode;
         this.isRespond = true;
-        this.leavePid = leavePid;
-        this.pid = pid;
-        dom.appendChild(this.$refs.respondBox);
       } else {
         this.$confirm("登录后即可点赞和收藏，是否前往登录页面?", "提示", {
           confirmButtonText: "确定",
@@ -312,11 +198,11 @@ export default {
           ? 1
           : parseInt(this.$route.query.aid); //获取传参的aid
       //判断当前用户是否登录
+      localStorage.setItem("userInfo", JSON.stringify({ userId: "admin" }));
       if (localStorage.getItem("userInfo")) {
         this.haslogin = true;
         this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
         this.userId = this.userInfo.userId;
-        //   console.log(this.userInfo);
       } else {
         this.haslogin = false;
       }
@@ -324,7 +210,6 @@ export default {
       this.pageId = initData ? 0 : this.pageId;
       //公用设置数据方法
 
-      console.log(this.listQuery)
       getComment(this.listQuery).then(result => {
         if (result && result.code == 200) {
           this.commentList = result.comment.records;
@@ -336,24 +221,6 @@ export default {
           }
         }
       });
-    //   function setData() {
-    //     if (result.code == 1001) {
-    //       //查询数据
-    //       var msg = result.data;
-    //       //   console.log("留言数据",result.data);
-    //       if (msg.length > 0 && msg.length < 8) {
-    //         this.hasMore = false;
-    //       } else {
-    //         this.hasMore = true;
-    //       }
-    //       this.commentList = initData ? msg : this.commentList.concat(msg);
-    //       this.pageId = msg[msg.length - 1].comment_id;
-    //     } else {
-    //       //查询数据为空
-    //       this.hasMore = false;
-    //       this.commentList = initData ? [] : this.commentList;
-    //     }
-    //   }
       if (this.$route.name == "DetailShare") {
         //文章列表的评论
         this.leaveId = 0;
@@ -390,7 +257,8 @@ export default {
   },
   components: {
     //定义组件
-    'comment-list-data':commentListData
+    "comment-list-data": commentListData,
+    comment_editor: commentEditor
   },
   watch: {
     // 如果路由有变化，会再次执行该方法

@@ -18,7 +18,7 @@ export function putComment(id) {
 
 export function postComment(data) {
   return request({
-    url: '/comment',
+    url: '/comment/article',
     method: 'post',
     data
   })

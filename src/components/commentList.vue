@@ -21,11 +21,16 @@
           </header>
           <section>
             <p v-html="analyzeEmoji(citem.content)">{{citem.content}}</p>
-            <div v-show="haslogin" class="tmsg-replay" @click="respondMsg(citem.id,item.id)">回复</div>
+            <div
+              v-show="haslogin"
+              class="tmsg-replay"
+              @click="respondMsg(item.id)"
+            >{{citem.id==parentId?"取消回复":"回复"}}</div>
+            <comment_editor v-show="citem.id==parentId" :parentId="citem.id" :articleId="citem.articleId"></comment_editor>
           </section>
         </article>
         <div>
-            <comment-list-data :item="citem"></comment-list-data>
+          <comment-list-data :item="citem"></comment-list-data>
         </div>
       </li>
     </ul>
@@ -33,9 +38,7 @@
 </template>
 
 <script>
-//这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
-//例如：import 《组件名称》 from '《组件路径》';
-
+import commentEditor from "../components/commentEditor.vue";
 export default {
   //import引入的组件需要注入到对象中才能使用
   name: "commentListData",
@@ -45,12 +48,13 @@ export default {
       type: Object
     }
   },
-  components: {},
+  components: { comment_editor: commentEditor },
   data() {
     //这里存放数据
     return {
-      haslogin: this.$parent.haslogin
-      };
+      haslogin: this.$parent.haslogin,
+      parentId: 0, //正在回复的评论
+    };
   },
   //监听属性 类似于data概念
   computed: {},
@@ -58,13 +62,16 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    analyzeEmoji: function(content){
-      this.$parent.analyzeEmoji(content);
+    analyzeEmoji: function(content) {
+      return this.$parent.analyzeEmoji(content);
+    },
+    respondMsg: function(parentId) {
+      this.parentId = this.parentId == 0 ? parentId : 0;
+      this.$parent.respondMsg(this.parentId);
     },
     showInitDate: function(oldDate, full) {
-      // console.log(oldDate,full);
-      return this.$parent.showInitDate(oldDate, full);;
-    },
+      return this.$parent.showInitDate(oldDate, full);
+    }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
