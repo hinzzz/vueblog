@@ -5,7 +5,7 @@
 
 <script>
 import hljs from "highlight.js";
-import "highlight.js/styles/googlecode.css";
+import "highlight.js/styles/idea.css";
 import "@/assets/css/github-markdown.css"
 
 const highlightCode = () => {
