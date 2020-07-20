@@ -14,11 +14,17 @@ const getRegister = (username,password,email,callback) =>{
 }
 
 //用户登录
-const UserLogin =  (email,password,callback) =>{
-    let url = portUrl + 'login/UserLogin?email='+email+'&password='+password;
-    axios.get(url).then(num => {
+const UserLogin =  (username,password,callback) =>{
+   // let url = portUrl + 'login/UserLogin?email='+email+'&password='+password;
+  //  axios.get(url).then(num => {
+  //          callback && callback(num.data);
+   // })
+   let url = portUrl + 'passport/loginblog';
+   let data = {'username':username,"password":password};
+  /// alert(data);
+   axios.post(url,data).then(num => {
             callback && callback(num.data);
-    })
+   })
 }
 //用户退出
 const LoginOut = (token,callback) =>{
