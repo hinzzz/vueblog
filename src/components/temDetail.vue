@@ -25,7 +25,6 @@
       </h2>
     </header>
     <!-- <div  class="article-content" v-html="detailObj.content"></div> -->
-    <!-- <div  class="article-content" v-highlight v-html="detailObj.content"></div> -->
     <md-html :content="detailObj.content"></md-html>
     <div class="dshareBox bdsharebuttonbox" data-tag="share_1">
       分享到:
@@ -79,11 +78,11 @@ import {
 import { detailArticle,getArtLikeCollect } from "@/api/article";
 import mdHtml from "../components/mdHtml.vue"
 
-
-
-
-
 export default {
+  components: {
+    //定义组件
+    'md-html':mdHtml
+  },
   data() {
     //选项 / 数据
     return {
@@ -172,10 +171,6 @@ export default {
   watch: {
     // 如果路由有变化，会再次执行该方法
     $route: "routeChange"
-  },
-  components: {
-    //定义组件
-    'md-html':mdHtml
   },
   created() {
     //生命周期函数

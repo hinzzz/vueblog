@@ -62,36 +62,6 @@
               </section>
             </article>
             <comment-list-data :item="item"></comment-list-data>
-            <!-- <ul v-show="item.comments" class="tmsg-commentlist" style="padding-left:60px;">
-              <li
-                class="tmsg-c-item"
-                v-for="(citem,cindex) in item.comments"
-                :key="'citem'+cindex"
-              >
-                <article class>
-                  <header>
-                    <img :src="'https://secure.gravatar.com/avatar/'+citem.emailMd5" :onerror="$store.state.errorImg" />
-                    <div class="i-name">
-                      {{citem.author}}
-                      <span>回复</span>
-                      {{item.author}}
-                    </div>
-                    <div class="i-class">{{citem.label}}</div>
-                    <div class="i-time">
-                      <time>{{citem.createTime}}</time>
-                    </div>
-                  </header>
-                  <section>
-                    <p v-html="analyzeEmoji(citem.content)">{{citem.content}}</p>
-                    <div
-                      v-show="haslogin"
-                      class="tmsg-replay"
-                      @click="respondMsg(citem.id,item.id)"
-                    >回复</div>
-                  </section>
-                </article>
-              </li>
-            </ul> -->
           </li>
         </ul>
         <h1 v-show="hasMore" class="tcolors-bg" @click="addMoreFun">查看更多</h1>
@@ -254,7 +224,6 @@ export default {
     //发送留言
     sendMsg: function() {
       //留言
-
       if (this.textarea) {
         this.sendTip = "咻~~";
         if (this.leaveId == 0) {

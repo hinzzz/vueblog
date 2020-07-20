@@ -1,25 +1,29 @@
 <!--  -->
 <template>
-  <div class="article-content" v-highlight >{{tomark(content)}}</div>
+  <div class="detail-box" v-show="content" v-html="content"  ></div>
 </template>
 
 <script>
-//这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
-//例如：import 《组件名称》 from '《组件路径》';
-import marked from "marked";
+import hljs from "highlight.js";
+import "highlight.js/styles/googlecode.css";
+
+const highlightCode = () => {
+  const preEl = document.querySelectorAll("pre");
+
+  preEl.forEach(el => {
+    hljs.highlightBlock(el);
+  });
+};
 
 export default {
   name: "mdHtml",
   props: {
     content: {
-      required: true,
       type: String
     }
   },
-  //import引入的组件需要注入到对象中才能使用
   components: {},
   data() {
-    //这里存放数据
     return {
     };
   },
@@ -30,7 +34,8 @@ export default {
   //方法集合
   methods: {
     tomark: function(content) {
-      return marked(content);
+      //return marked(content);
+      return markLoader(content);
     }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -38,486 +43,88 @@ export default {
 
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
+  mounted() {highlightCode();},
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
-  updated() {}, //生命周期 - 更新之后
+  updated() {highlightCode();}, //生命周期 - 更新之后
   beforeDestroy() {}, //生命周期 - 销毁之前
   destroyed() {}, //生命周期 - 销毁完成
   activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
 <style scoped>
-/*添加自己喜欢的样式，也可以去网找一份*/
-.content {
-  h1,
-  h2,
-  h3,
-  h4 {
-    color: #111111;
-    font-weight: 400;
-    margin-top: 1em;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
-    font-family: Georgia, Palatino, serif;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  dl {
-    margin-bottom: 16px;
-    padding: 0;
-  }
-  p {
-    margin: 8px 0;
-  }
-  h1 {
-    font-size: 48px;
-    line-height: 54px;
-  }
-  h2 {
-    font-size: 36px;
-    line-height: 42px;
-  }
-  h1,
-  h2 {
-    border-bottom: 1px solid #efeaea;
-    padding-bottom: 10px;
-  }
-  h3 {
-    font-size: 24px;
-    line-height: 30px;
-  }
-  h4 {
-    font-size: 21px;
-    line-height: 26px;
-  }
-  h5 {
-    font-size: 18px;
-    list-style: 23px;
-  }
-  a {
-    color: #0099ff;
-    margin: 0;
-    padding: 0;
-    vertical-align: baseline;
-  }
-  a:hover {
-    text-decoration: none;
-    color: #ff6600;
-  }
-  a:visited {
-    /*color: purple;*/
-  }
-  ul,
-  ol {
-    padding: 0;
-    padding-left: 24px;
-    margin: 0;
-  }
-  li {
-    line-height: 24px;
-  }
-  p,
-  ul,
-  ol {
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  ol ol,
-  ul ol {
-    list-style-type: lower-roman;
-  }
-
-  pre {
-    max-width: 800px;
-    white-space: pre-wrap;
-    line-height: 1.7em;
-    overflow: auto;
-    padding: 6px 10px;
-  }
-  /*
-  code {
-      font-family: Consolas, Monaco, Andale Mono, monospace;
-      line-height: 1.5;
-      font-size: 13px;
-  }*/
-
-  /* code, pre {
-      border-radius: 3px;
-      background-color:#f7f7f7;
-      color: inherit;
-  }
-  
-  code {
-      font-family: Consolas, Monaco, Andale Mono, monospace;
-      margin: 0 2px;
-  }
-  
-  pre {
-      line-height: 1.7em;
-      overflow: auto;
-      padding: 6px 10px;
-      border-left: 5px solid #6CE26C;
-  } */
-
-  /*   pre > code {
-    border: 0;
-    display: inline;
-    max-width: initial;
-    padding: 0;
-    margin: 0;
-    overflow: initial;
-    line-height: inherit;
-    font-size: .85em;
-    white-space: pre;
-    background: 0 0;
- 
-} */
-
-  /*   code {
-    color: #666555;
-} */
-
-  /** markdown preview plus 对于代码块的处理有些问题, 所以使用统一的颜色 */
-  /*code .keyword {
-    color: #8959a8;
-  }
- 
-  code .number {
-    color: #f5871f;
-  }
- 
-  code .comment {
-    color: #998
-  }*/
-
-  aside {
-    display: block;
-    float: right;
-    width: 390px;
-  }
-  blockquote {
-    border-left: 0.5em solid #eee;
-    padding: 0 0 0 2em;
-    margin-left: 0;
-  }
-  blockquote cite {
-    font-size: 14px;
-    line-height: 20px;
-    color: #bfbfbf;
-  }
-  blockquote cite:before {
-    content: "\2014 \00A0";
-  }
-
-  blockquote p {
-    color: #666;
-  }
-  hr {
-    text-align: left;
-    color: #999;
-    height: 2px;
-    padding: 0;
-    margin: 16px 0;
-    background-color: #e7e7e7;
-    border: 0 none;
-  }
-
-  dl {
-    padding: 0;
-  }
-
-  dl dt {
-    padding: 10px 0;
-    margin-top: 16px;
-    font-size: 1em;
-    font-style: italic;
-    font-weight: bold;
-  }
-
-  dl dd {
-    padding: 0 16px;
-    margin-bottom: 16px;
-  }
-
-  dd {
-    margin-left: 0;
-  }
-
-  /* Code below this line is copyright Twitter Inc. */
-
-  button,
-  input,
-  select,
-  textarea {
-    font-size: 100%;
-    margin: 0;
-    vertical-align: baseline;
-    *vertical-align: middle;
-  }
-  button,
-  input {
-    line-height: normal;
-    *overflow: visible;
-  }
-  button::-moz-focus-inner,
-  input::-moz-focus-inner {
-    border: 0;
-    padding: 0;
-  }
-  button,
-  input[type="button"],
-  input[type="reset"],
-  input[type="submit"] {
-    cursor: pointer;
-    -webkit-appearance: button;
-  }
-  input[type="checkbox"],
-  input[type="radio"] {
-    cursor: pointer;
-  }
-  /* override default chrome & firefox settings */
-  input:not([type="image"]),
-  textarea {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-  }
-
-  input[type="search"] {
-    -webkit-appearance: textfield;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-  }
-  input[type="search"]::-webkit-search-decoration {
-    -webkit-appearance: none;
-  }
-  label,
-  input,
-  select,
-  textarea {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    font-weight: normal;
-    line-height: normal;
-    margin-bottom: 18px;
-  }
-  input[type="checkbox"],
-  input[type="radio"] {
-    cursor: pointer;
-    margin-bottom: 0;
-  }
-  input[type="text"],
-  input[type="password"],
-  textarea,
-  select {
-    display: inline-block;
-    width: 210px;
-    padding: 4px;
-    font-size: 13px;
-    font-weight: normal;
-    line-height: 18px;
-    height: 18px;
-    color: #808080;
-    border: 1px solid #ccc;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-  }
-  select,
-  input[type="file"] {
-    height: 27px;
-    line-height: 27px;
-  }
-  textarea {
-    height: auto;
-  }
-  /* grey out placeholders */
-  :-moz-placeholder {
-    color: #bfbfbf;
-  }
-  ::-webkit-input-placeholder {
-    color: #bfbfbf;
-  }
-  input[type="text"],
-  input[type="password"],
-  select,
-  textarea {
-    -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
-    -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
-    transition: border linear 0.2s, box-shadow linear 0.2s;
-    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  input[type="text"]:focus,
-  input[type="password"]:focus,
-  textarea:focus {
-    outline: none;
-    border-color: rgba(82, 168, 236, 0.8);
-    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1),
-      0 0 8px rgba(82, 168, 236, 0.6);
-    -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1),
-      0 0 8px rgba(82, 168, 236, 0.6);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1),
-      0 0 8px rgba(82, 168, 236, 0.6);
-  }
-  /* buttons */
-  button {
-    display: inline-block;
-    padding: 4px 14px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    line-height: 18px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      0 1px 2px rgba(0, 0, 0, 0.05);
-    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      0 1px 2px rgba(0, 0, 0, 0.05);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      0 1px 2px rgba(0, 0, 0, 0.05);
-    background-color: #0064cd;
-    background-repeat: repeat-x;
-    background-image: -khtml-gradient(
-      linear,
-      left top,
-      left bottom,
-      from(#049cdb),
-      to(#0064cd)
-    );
-    background-image: -moz-linear-gradient(top, #049cdb, #0064cd);
-    background-image: -ms-linear-gradient(top, #049cdb, #0064cd);
-    background-image: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      color-stop(0%, #049cdb),
-      color-stop(100%, #0064cd)
-    );
-    background-image: -webkit-linear-gradient(top, #049cdb, #0064cd);
-    background-image: -o-linear-gradient(top, #049cdb, #0064cd);
-    background-image: linear-gradient(top, #049cdb, #0064cd);
-    color: #fff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    border: 1px solid #004b9a;
-    border-bottom-color: #003f81;
-    -webkit-transition: 0.1s linear all;
-    -moz-transition: 0.1s linear all;
-    transition: 0.1s linear all;
-    border-color: #0064cd #0064cd #003f81;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  }
-  button:hover {
-    color: #fff;
-    background-position: 0 -15px;
-    text-decoration: none;
-  }
-  button:active {
-    -webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15),
-      0 1px 2px rgba(0, 0, 0, 0.05);
-    -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15),
-      0 1px 2px rgba(0, 0, 0, 0.05);
-    box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15),
-      0 1px 2px rgba(0, 0, 0, 0.05);
-  }
-  button::-moz-focus-inner {
-    padding: 0;
-    border: 0;
-  }
-  table {
-    *border-collapse: collapse; /* IE7 and lower */
-    border-spacing: 0;
-    width: 100%;
-  }
-  table {
-    border: solid #ccc 1px;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border-radius: 6px;
-    /*-webkit-box-shadow: 0 1px 1px #ccc;
-      -moz-box-shadow: 0 1px 1px #ccc;
-      box-shadow: 0 1px 1px #ccc;   */
-  }
-  table tr:hover {
-    background: #fbf8e9;
-    -o-transition: all 0.1s ease-in-out;
-    -webkit-transition: all 0.1s ease-in-out;
-    -moz-transition: all 0.1s ease-in-out;
-    -ms-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;
-  }
-  table td,
-  .table th {
-    border-left: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-  }
-
-  table th {
-    background-color: #dce9f9;
-    background-image: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      from(#ebf3fc),
-      to(#dce9f9)
-    );
-    background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
-    background-image: -moz-linear-gradient(top, #ebf3fc, #dce9f9);
-    background-image: -ms-linear-gradient(top, #ebf3fc, #dce9f9);
-    background-image: -o-linear-gradient(top, #ebf3fc, #dce9f9);
-    background-image: linear-gradient(top, #ebf3fc, #dce9f9);
-    /*-webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
-      -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
-      box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;*/
-    border-top: none;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-    padding: 5px;
-  }
-
-  table td:first-child,
-  table th:first-child {
-    border-left: none;
-  }
-
-  table th:first-child {
-    -moz-border-radius: 6px 0 0 0;
-    -webkit-border-radius: 6px 0 0 0;
-    border-radius: 6px 0 0 0;
-  }
-  table th:last-child {
-    -moz-border-radius: 0 6px 0 0;
-    -webkit-border-radius: 0 6px 0 0;
-    border-radius: 0 6px 0 0;
-  }
-  table th:only-child {
-    -moz-border-radius: 6px 6px 0 0;
-    -webkit-border-radius: 6px 6px 0 0;
-    border-radius: 6px 6px 0 0;
-  }
-  table tr:last-child td:first-child {
-    -moz-border-radius: 0 0 0 6px;
-    -webkit-border-radius: 0 0 0 6px;
-    border-radius: 0 0 0 6px;
-  }
-  table tr:last-child td:last-child {
-    -moz-border-radius: 0 0 6px 0;
-    -webkit-border-radius: 0 0 6px 0;
-    border-radius: 0 0 6px 0;
-  }
+.detail-box {
+  padding-top: 100px;
+  width: 750px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+.tag {
+  color: #bfbfbf;
+  border: 1px solid #bfbfbf;
+  border-radius: 13px;
+  height: 23px;
+  padding: 0 10px;
+  line-height: 23px;
+  margin-right: 5px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 14px;
 }
 </style>
+<style>
+pre {
+  background: #e4e8f1 !important;
+  border-radius: 8px !important;
+  padding: 10px !important;
+  font-size: 15px !important;
+}
+.detail-box
+h3,
+h2,
+h1 {
+  position: relative;
+}
+.detail-box h3::before {
+  content: "#";
+  position: absolute;
+  left: -15px;
+  color: #337ab7;
+}
+.detail-box h2::before {
+  content: "#";
+  position: absolute;
+  left: -15px;
+  color: #337ab7;
+}
+.detail-box h1::before {
+  content: "#";
+  position: absolute;
+  left: -15px;
+  color: #337ab7;
+}
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.info {
+  font-style: italic;
+  margin-top: 8px;
+  font-family: Lora, "Times New Roman", serif;
+}
+blockquote {
+  position: relative;
+  margin-left: 20px;
+}
+blockquote::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 4px;
+  background-color: orange;
+  left: -20px;
+}
+</style>
+

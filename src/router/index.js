@@ -19,7 +19,8 @@ export default new Router({
 			}
 		}
 	},
-	routes: [{
+	routes: [
+		{
 			path: '/',
 			component: resolve => require(['../pages/Home.vue'], resolve),
 			meta: {
