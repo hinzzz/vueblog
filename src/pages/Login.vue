@@ -21,13 +21,13 @@
                         show-icon  :closable="false">
                     </el-alert>
                     <el-input
-                        type="email"
-                        placeholder="邮箱"
-                        v-model="email">
+                        type="username"
+                        placeholder="用户名"
+                        v-model="username">
                     </el-input>
                     <el-alert
-                        v-show="emailErr"
-                        title="请输入邮箱"
+                        v-show="usernameErr"
+                        title="请输入用户名"
                         type="error"
                         show-icon  :closable="false">
                     </el-alert>
@@ -154,6 +154,8 @@ import {getRegister,UserLogin} from '../utils/server.js'
                 passwordErr: false,//的轮毂密码错误
                 loginErr: false,//登录错误
                 loginTitle:'用户名或密码错误',
+
+                usernameErr:false,///用户名不对
                 nusernameErr:false,//新用户注册用户名错误
                 nemailErr: false,//新用户注册邮箱错误
                 npasswordErr: false,//新用户注册密码错误
@@ -192,30 +194,31 @@ import {getRegister,UserLogin} from '../utils/server.js'
             },
             gotoHome:function(){//用户登录
                 var that = this;
-                var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ ;
-                var preg = /^(\w){6,12}$/;
-                if(reg.test(that.email)){
-                    that.emailErr = false;
-                }else{
-                    that.emailErr = true;
-                }
-                if(that.password&&preg.test(that.password)){
-                    that.passwordErr = false;
-                }else{
-                    that.passwordErr = true;
-                }
-                if(!that.emailErr&&!that.passwordErr){
-                    UserLogin(that.email,that.password,function(msg){
-                        // console.log(msg);
-                        if(msg.code==1010){//登录成功
-                             localStorage.setItem('userInfo',JSON.stringify(msg.data));
-                             localStorage.setItem('accessToken',msg.token);
-                             if(localStorage.getItem('logUrl')){
-                                 that.$router.push({path:localStorage.getItem('logUrl')});
-                             }else{
-                                 that.$router.push({path:'/'});
-                             }
-
+                // var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ ;
+                // var preg = /^(\w){6,12}$/;
+                // if(reg.test(that.username)){
+                //     that.usernameErr = false;
+                // }else{
+                //     that.usernameErr = true;
+                // }
+                // if(that.password&&preg.test(that.password)){
+                //     that.passwordErr = false;
+                // }else{
+                //     that.passwordErr = true;
+                // }
+             ///  alert("11111:" +that.username + "," +that.password);
+                if(!that.usernameErr&&!that.passwordErr){
+                    UserLogin(that.username,that.password,function(msg){
+                       console.log(msg);
+                        if(msg.code==1){//登录成功
+                            //  localStorage.setItem('userInfo',JSON.stringify(msg.data));
+                            //  localStorage.setItem('accessToken',msg.token);
+                            //  if(localStorage.getItem('logUrl')){
+                            //      that.$router.push({path:localStorage.getItem('logUrl')});
+                            //  }else{
+                            //      that.$router.push({path:'/'});
+                            //  }
+                             that.$router.push({path:'/'});
                         }else if(msg.code==2008||msg.code==2007){//邮箱或密码错误
                             that.loginErr = true;
                             that.loginTitle = '邮箱或密码错误';
