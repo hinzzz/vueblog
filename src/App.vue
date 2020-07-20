@@ -50,7 +50,7 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
-  font: inherit;
+
 }
 body{
   font-family:Arial,"STHeiti", Helvetica, sans-serif;

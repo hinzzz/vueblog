@@ -1,11 +1,12 @@
 <!--  -->
 <template>
-  <div class="detail-box" v-show="content" v-html="content"  ></div>
+  <div class="markdown-body" v-show="content" v-html="content"  ></div>
 </template>
 
 <script>
 import hljs from "highlight.js";
 import "highlight.js/styles/googlecode.css";
+import "@/assets/css/github-markdown.css"
 
 const highlightCode = () => {
   const preEl = document.querySelectorAll("pre");
@@ -33,10 +34,6 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    tomark: function(content) {
-      //return marked(content);
-      return markLoader(content);
-    }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
@@ -54,77 +51,19 @@ export default {
 };
 </script>
 <style scoped>
-.detail-box {
-  padding-top: 100px;
-  width: 750px;
-  margin: 0 auto;
-  padding-bottom: 40px;
-}
-.tag {
-  color: #bfbfbf;
-  border: 1px solid #bfbfbf;
-  border-radius: 13px;
-  height: 23px;
-  padding: 0 10px;
-  line-height: 23px;
-  margin-right: 5px;
-  margin-bottom: 6px;
-  cursor: pointer;
-  font-size: 14px;
-}
-</style>
-<style>
-pre {
-  background: #e4e8f1 !important;
-  border-radius: 8px !important;
-  padding: 10px !important;
-  font-size: 15px !important;
-}
-.detail-box
-h3,
-h2,
-h1 {
-  position: relative;
-}
-.detail-box h3::before {
-  content: "#";
-  position: absolute;
-  left: -15px;
-  color: #337ab7;
-}
-.detail-box h2::before {
-  content: "#";
-  position: absolute;
-  left: -15px;
-  color: #337ab7;
-}
-.detail-box h1::before {
-  content: "#";
-  position: absolute;
-  left: -15px;
-  color: #337ab7;
-}
-.title {
-  font-size: 30px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-.info {
-  font-style: italic;
-  margin-top: 8px;
-  font-family: Lora, "Times New Roman", serif;
-}
-blockquote {
-  position: relative;
-  margin-left: 20px;
-}
-blockquote::before {
-  content: "";
-  position: absolute;
-  height: 100%;
-  width: 4px;
-  background-color: orange;
-  left: -20px;
-}
+.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+
+
 </style>
 
