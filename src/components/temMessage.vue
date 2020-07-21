@@ -1,6 +1,11 @@
 <!-- 留言评论模块 -->
 <template>
   <div class="tmsgBox" ref="tmsgBox">
+    <div class="tmsg-respond" ref="respondBox">
+    <h3>
+      发表评论
+    </h3>
+    </div>
     <comment_editor></comment_editor>
 
     <div class="tmsg-comments" ref="listDom">
@@ -24,7 +29,6 @@
                 <p v-html="analyzeEmoji(item.content)">{{analyzeEmoji(item.content)}}</p>
                 <div
                   :id="item.id"
-                  v-if="haslogin"
                   class="tmsg-replay"
                   @click="respondMsg(item.id)"
                 >{{item.id==parentId?"取消回复":"回复"}}</div>
@@ -38,8 +42,6 @@
             <comment-list-data :item="item"></comment-list-data>
           </li>
         </ul>
-        <h1 v-show="hasMore" class="tcolors-bg" @click="addMoreFun">查看更多</h1>
-        <h1 v-show="!hasMore" class="tcolors-bg">没有更多</h1>
       </div>
     </div>
   </div>
@@ -74,7 +76,6 @@ export default {
         articleUrl: this.$route.query.url
       },
       respondBox: "", //评论表单
-      listDom: "", //评论列表
       tmsgBox: "", //总评论盒子
       isRespond: false,
       textarea: "", //文本框输入内容
@@ -131,7 +132,6 @@ export default {
             function(msg) {
               this.textarea = "";
               this.routeChange();
-              this.removeRespond();
               var timer02 = setTimeout(function() {
                 this.sendTip = "发送~";
                 clearTimeout(timer02);
@@ -165,6 +165,7 @@ export default {
     respondMsg: function(parentId) {
       //回复留言
       this.parentId = this.parentId == 0 ? parentId : 0;
+      console.log(localStorage.getItem("userInfo"))
       if (localStorage.getItem("userInfo")) {
         this.isRespond = true;
       } else {
@@ -182,23 +183,8 @@ export default {
           .catch(() => {});
       }
     },
-    removeRespond: function() {
-      //取消回复留言
-      this.isRespond = false;
-      this.$refs.tmsgBox.insertBefore(
-        this.$refs.respondBox,
-        this.$refs.listDom
-      );
-    },
     showCommentList: function(initData) {
-      //评论列表
-
-      this.aid =
-        this.$route.query.aid == undefined
-          ? 1
-          : parseInt(this.$route.query.aid); //获取传参的aid
       //判断当前用户是否登录
-      localStorage.setItem("userInfo", JSON.stringify({ userId: "admin" }));
       if (localStorage.getItem("userInfo")) {
         this.haslogin = true;
         this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -208,7 +194,6 @@ export default {
       }
       //是否重新加载数据 还是累计加载
       this.pageId = initData ? 0 : this.pageId;
-      //公用设置数据方法
 
       getComment(this.listQuery).then(result => {
         if (result && result.code == 200) {
@@ -221,37 +206,10 @@ export default {
           }
         }
       });
-      if (this.$route.name == "DetailShare") {
-        //文章列表的评论
-        this.leaveId = 0;
-        ArticleComment(this.aid, this.pageId, function(result) {
-          //查询列表
-          setData(result);
-        });
-      } else {
-        //其他评论
-        if (this.$route.name == "Reward") {
-          //（1：赞赏 2：友情链接 3：留言板 4：关于我）
-          this.leaveId = 1;
-        } else if (this.$route.name == "FriendsLink") {
-          this.leaveId = 2;
-        } else if (this.$route.name == "Message") {
-          this.leaveId = 3;
-        } else if (this.$route.name == "Aboutme") {
-          this.leaveId = 4;
-        }
-        OtherComment(this.leaveId, this.pageId, function(result) {
-          setData(result);
-        });
-      }
     },
-    addMoreFun: function() {
-      //查看更多
-      this.showCommentList(false);
-    },
+
     routeChange: function() {
       //重新加载
-
       this.showCommentList(true);
     }
   },
@@ -267,7 +225,6 @@ export default {
   created() {
     //生命周期函数
     // console.log(this.$route);
-
     this.routeChange();
   },
   mounted() {

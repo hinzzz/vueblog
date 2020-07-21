@@ -1,10 +1,6 @@
 <!--  -->
 <template>
   <div class="tmsg-respond" ref="respondBox">
-    <h3>
-      发表评论
-      <small v-show="isRespond" class="tcolorm" @click="removeRespond">取消回复</small>
-    </h3>
     <form class>
       <input type="hidden" name="parentId" v-model="parentId" />
       <input type="hidden" name="articleId" v-model="articleId" />
@@ -43,7 +39,6 @@
 <script>
 import { postComment } from "../api/comment.js";
 
-
 export default {
   name: "commentEditor",
   components: {},
@@ -57,6 +52,7 @@ export default {
   },
   data() {
     return {
+      email:"",
       isRespond: false,
       content: "", //文本框输入内容
       pBody: true, //表情打开控制
@@ -147,20 +143,16 @@ export default {
     choseEmoji: function(inner) {
       this.content += "[" + inner + "]";
     },
-    removeRespond: function() {
-      //取消回复留言
-      this.isRespond = false;
-      this.$refs.tmsgBox.insertBefore(
-        this.$refs.respondBox,
-        this.$refs.listDom
-      );
-    },
     //发送留言
     sendMsg: function() {
       //留言
       if (this.content) {
         this.sendTip = "咻~~";
-        postComment({content:this.content,parentId:this.parentId,articleId:this.articleId}).then(result => {
+        postComment({
+          content: this.content,
+          parentId: this.parentId,
+          articleId: this.articleId
+        }).then(result => {
           if (result && result.code == 200) {
             this.$notify({
               title: "评论",
