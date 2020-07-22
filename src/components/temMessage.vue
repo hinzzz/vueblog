@@ -27,19 +27,11 @@
               </header>
               <section>
                 <p v-html="analyzeEmoji(item.content)">{{analyzeEmoji(item.content)}}</p>
-                <div
-                  :id="item.id"
-                  class="tmsg-replay"
-                  @click="respondMsg(item.id)"
-                >{{item.id==parentId?"取消回复":"回复"}}</div>
-                <comment_editor
-                  v-show="item.id==parentId"
-                  :parentId="item.id"
-                  :articleId="item.articleId"
-                ></comment_editor>
+                <div :id="item.id" class="tmsg-replay" @click="respondMsg(item.id)">{{item.id==parentId?"取消回复":"回复"}}</div>
+                <comment_editor v-show="item.id==parentId" :parentId="item.id" :articleId="item.articleId"></comment_editor>
               </section>
             </article>
-            <comment-list-data :item="item"></comment-list-data>
+            <comment-list-data :item="item" ref="commentList" ></comment-list-data>
           </li>
         </ul>
       </div>
@@ -162,11 +154,21 @@ export default {
         }, 3000);
       }
     },
+    resetRespond: function(){
+      this.$refs.commentList.forEach(comment=>{
+        console.log(comment)
+      })
+    },
     respondMsg: function(parentId) {
       //回复留言
+      this.$refs.commentList.forEach(comment=>{
+        console.log(comment)
+      })
+      if(parentId!=this.parentId){
+        this.parentId = 0;
+      }
       this.parentId = this.parentId == 0 ? parentId : 0;
-      console.log(localStorage.getItem("userInfo"))
-      if (localStorage.getItem("userInfo")) {
+      if (!localStorage.getItem("userInfo")) {
         this.isRespond = true;
       } else {
         this.$confirm("登录后即可点赞和收藏，是否前往登录页面?", "提示", {
