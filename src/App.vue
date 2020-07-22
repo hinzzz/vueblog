@@ -96,6 +96,7 @@ abbr, acronym{
 }
 a{
      text-decoration:none;
+     cursor: pointer;
 }
 html{-webkit-text-size-adjust:none;width:100%;height:100% } /*????iphone??safari????????????*/
 input[type="text"], input[type="button"], input[type="submit"], input[type="search"]{

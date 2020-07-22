@@ -3,6 +3,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
+	mode: 'history',
 	scrollBehavior(to, from, savePosition) { // 在点击浏览器的“前进/后退”，或者切换导航的时候触发。
 		if (savePosition) {
 			return savePosition;
