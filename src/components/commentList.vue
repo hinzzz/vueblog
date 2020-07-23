@@ -24,12 +24,12 @@
             <div
               class="tmsg-replay"
               @click="respondMsg(citem.id)"
-            >{{citem.id==parentId?"取消回复":"回复"}}</div>
-            <comment_editor v-show="citem.id==parentId" :parentId="citem.id" :articleId="citem.articleId"></comment_editor>
+            >{{citem.id==commentEditorId?"取消回复":"回复"}}</div>
+            <comment_editor v-show="citem.id==commentEditorId" :parentId="citem.id" :articleId="citem.articleId"></comment_editor>
           </section>
         </article>
         <div>
-          <comment-list-data :item="citem" ref="commentList" ></comment-list-data>
+          <comment-list-data :item="citem" ref="subCommentList" ></comment-list-data>
         </div>
       </li>
     </ul>
@@ -52,7 +52,7 @@ export default {
     //这里存放数据
     return {
       haslogin: this.$parent.haslogin,
-      parentId:0
+      commentEditorId:0
     };
   },
   //监听属性 类似于data概念
@@ -61,19 +61,21 @@ export default {
   watch: {},
   //方法集合
   methods: {
+    resetCommentEditorId2(commentEditorId){
+      return this.$parent.resetCommentEditorId2(commentEditorId);
+    },
     analyzeEmoji: function(content) {
       return this.$parent.analyzeEmoji(content);
     },
-    resetRespond: function(){
-      this.parentId = 0;
-      this.$parent.resetRespond();
+    resetCommentEditorId(){
+      this.commentEditorId = 0;
     },
-    respondMsg: function(parentId) {
-      // if(parentId!=this.parentId){
-      //   this.parentId = 0;
-      // }
-      this.resetRespond();
-      this.parentId = this.parentId == 0 ? parentId : 0;
+    rootResetRespond: function(commentEditorId){
+      this.$parent.rootResetRespond(commentEditorId,false);
+    },
+    respondMsg: function(commentEditorId) {
+      this.rootResetRespond(commentEditorId);
+      this.commentEditorId = this.commentEditorId == 0 ? commentEditorId : 0;
     },
     showInitDate: function(oldDate, full) {
       return this.$parent.showInitDate(oldDate, full);

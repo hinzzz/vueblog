@@ -26,12 +26,12 @@
                 </div>
               </header>
               <section>
-                <p v-html="analyzeEmoji(item.content)">{{analyzeEmoji(item.content)}}</p>
-                <div :id="item.id" class="tmsg-replay" @click="respondMsg(item.id)">{{item.id==parentId?"取消回复":"回复"}}</div>
-                <comment_editor v-show="item.id==parentId" :parentId="item.id" :articleId="item.articleId"></comment_editor>
+                <p >{{analyzeEmoji(item.content)}}</p>
+                <div :id="item.id" class="tmsg-replay" @click="respondMsg(item.id)">{{item.id==commentEditorId?"取消回复":"回复"}}</div>
+                <comment_editor v-show="item.id==commentEditorId" :parentId="item.id" :articleId="item.articleId"></comment_editor>
               </section>
             </article>
-            <comment-list-data :item="item" ref="commentList" ></comment-list-data>
+            <comment-list-data :item="item" ref="subCommentList" ></comment-list-data>
           </li>
         </ul>
       </div>
@@ -56,7 +56,7 @@ export default {
     //选项 / 数据
     return {
       hasMore: false,
-      parentId: 0, //正在回复的评论
+      commentEditorId: 0, //正在回复的评论
       total: 0,
       listQuery: {
         current: 1,
@@ -154,20 +154,34 @@ export default {
         }, 3000);
       }
     },
-    resetRespond: function(){
-      this.$refs.commentList.forEach(comment=>{
-        console.log(comment)
+    resetRespond: function(subCommentList,commentEditorId){
+      subCommentList.forEach(comment=>{
+        if(commentEditorId!=comment.commentEditorId){
+          comment.resetCommentEditorId();
+          //console.log("id",comment.item.id,"commentEditorId",commentEditorId,"comment.commentEditorId",comment.commentEditorId)
+        }
+        //console.log(comment)
+        if(comment.$refs.subCommentList && comment.$refs.subCommentList.length>0){
+          this.resetRespond(comment.$refs.subCommentList,commentEditorId);
+        }
       })
     },
-    respondMsg: function(parentId) {
-      //回复留言
-      this.$refs.commentList.forEach(comment=>{
-        console.log(comment)
-      })
-      if(parentId!=this.parentId){
-        this.parentId = 0;
+    rootResetRespond: function(commentEditorId,rootFlag){
+      this.resetCommentEditorId(rootFlag);
+      this.resetRespond(this.$refs.subCommentList,commentEditorId);
+    },
+    resetCommentEditorId(rootFlag){
+      if(!rootFlag){
+        this.commentEditorId = 0;
       }
-      this.parentId = this.parentId == 0 ? parentId : 0;
+    },
+    respondMsg: function(commentEditorId) {
+      //回复留言
+      if(commentEditorId!=this.commentEditorId){
+        this.commentEditorId = 0;
+      }
+      this.rootResetRespond(commentEditorId,true);
+      this.commentEditorId = this.commentEditorId == 0 ? commentEditorId : 0;
       if (!localStorage.getItem("userInfo")) {
         this.isRespond = true;
       } else {

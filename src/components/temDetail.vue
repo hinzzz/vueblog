@@ -25,7 +25,7 @@
       </h2>
     </header>
     <!-- <div  class="article-content" v-html="detailObj.content"></div> -->
-    <md-html :content="detailObj.content"></md-html>
+    <!-- <md-html :content="detailObj.content"></md-html> -->
     <div class="dshareBox bdsharebuttonbox" data-tag="share_1">
       分享到:
       <a href="javascript:void(0);" class="ds-weibo fa fa-fw fa-weibo" data-cmd="tsina"></a>
