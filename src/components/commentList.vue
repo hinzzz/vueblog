@@ -38,6 +38,7 @@
 
 <script>
 import commentEditor from "../components/commentEditor.vue";
+
 export default {
   //import引入的组件需要注入到对象中才能使用
   name: "commentListData",
@@ -61,20 +62,27 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    resetCommentEditorId2(commentEditorId){
-      return this.$parent.resetCommentEditorId2(commentEditorId);
-    },
     analyzeEmoji: function(content) {
       return this.$parent.analyzeEmoji(content);
+    },
+    updateCommentList:function(comment){
+      console.log(this.item)
+      console.log(comment,comment.parentId,this.item.id)
+      if(comment.parentId==0){
+        this.$parent.updateCommentList(comment);
+      }else if(comment.parentId==this.item.id){
+        this.item.comments.push(comment);
+        console.log(this.item);
+      }
     },
     resetCommentEditorId(){
       this.commentEditorId = 0;
     },
-    rootResetRespond: function(commentEditorId){
-      this.$parent.rootResetRespond(commentEditorId,false);
+    rootResetRespond: function(commentEditorId,rootFlag){
+      this.$parent.rootResetRespond(commentEditorId,rootFlag);
     },
     respondMsg: function(commentEditorId) {
-      this.rootResetRespond(commentEditorId);
+      this.rootResetRespond(commentEditorId,false);
       this.commentEditorId = this.commentEditorId == 0 ? commentEditorId : 0;
     },
     showInitDate: function(oldDate, full) {

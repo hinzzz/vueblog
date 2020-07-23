@@ -50,6 +50,7 @@ import {
 import { getComment } from "../api/comment.js";
 import commentListData from "../components/commentList.vue";
 import commentEditor from "../components/commentEditor.vue";
+import { OwOlist } from "../utils/config.js";
 
 export default {
   data() {
@@ -75,7 +76,8 @@ export default {
       commentList: "", //评论列表数据
       pageId: 0, //当前第几页
       haslogin: false,
-      userId: "" //用户id
+      userId: "" ,//用户id
+      OwOlist:OwOlist
     };
   },
   methods: {
@@ -109,58 +111,30 @@ export default {
       }
       return str;
     },
-    //发送留言
-    sendMsg: function() {
-      //留言
-      if (this.textarea) {
-        this.sendTip = "咻~~";
-        if (this.leaveId == 0) {
-          setArticleComment(
-            this.textarea,
-            this.userId,
-            this.aid,
-            this.leavePid,
-            this.pid,
-            function(msg) {
-              this.textarea = "";
-              this.routeChange();
-              var timer02 = setTimeout(function() {
-                this.sendTip = "发送~";
-                clearTimeout(timer02);
-              }, 1000);
-            }
-          );
-        } else {
-          //其他模块留言回复
-          setOuthComment(
-            this.textarea,
-            this.userId,
-            this.aid,
-            this.leaveId,
-            this.leavePid,
-            this.pid,
-            function(msg) {
-              this.textarea = "";
-              this.removeRespond();
-              this.routeChange();
-            }
-          );
-        }
-      } else {
-        this.sendTip = "内容不能为空~";
-        var timer = setTimeout(function() {
-          this.sendTip = "发送~";
-          clearTimeout(timer);
-        }, 3000);
+    updateCommentList:function(comment){
+      if(comment.parentId==0){
+        this.commentList.push(comment);
+      }else{
+        //this.reqUpdateCommentList(this.commentList,comment)
       }
+      console.log(this.commentList)
+    },
+    reqUpdateCommentList: function(commentList,comment){
+      commentList.forEach(subComment=>{
+        if(subComment.id==comment.parentId){
+          subComment.comments.push(comment);
+        }else{
+          if(commentList.comments && commentList.comments.length>0){
+            this.reqUpdateCommentList(commentList.comments,comment);
+          }
+        }
+      })
     },
     resetRespond: function(subCommentList,commentEditorId){
       subCommentList.forEach(comment=>{
         if(commentEditorId!=comment.commentEditorId){
           comment.resetCommentEditorId();
-          //console.log("id",comment.item.id,"commentEditorId",commentEditorId,"comment.commentEditorId",comment.commentEditorId)
         }
-        //console.log(comment)
         if(comment.$refs.subCommentList && comment.$refs.subCommentList.length>0){
           this.resetRespond(comment.$refs.subCommentList,commentEditorId);
         }
@@ -200,17 +174,6 @@ export default {
       }
     },
     showCommentList: function(initData) {
-      //判断当前用户是否登录
-      if (localStorage.getItem("userInfo")) {
-        this.haslogin = true;
-        this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        this.userId = this.userInfo.userId;
-      } else {
-        this.haslogin = false;
-      }
-      //是否重新加载数据 还是累计加载
-      this.pageId = initData ? 0 : this.pageId;
-
       getComment(this.listQuery).then(result => {
         if (result && result.code == 200) {
           this.commentList = result.comment.records;
