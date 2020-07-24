@@ -58,9 +58,6 @@
             }
         },
         methods: { //事件处理器
-            showInitDate:function(date,full){//时间处理
-                return initDate(date,full)
-            }
         },
         components: { //定义组件
 

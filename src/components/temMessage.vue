@@ -22,13 +22,13 @@
                 <div class="i-name">{{item.author}}</div>
                 <div class="i-class">{{item.label}}</div>
                 <div class="i-time">
-                  <time>{{showInitDate(item.createTime,'all')}}</time>
+                  <time>{{$moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}}</time>
                 </div>
               </header>
               <section>
                 <p >{{analyzeEmoji(item.content)}}</p>
                 <div :id="item.id" class="tmsg-replay" @click="respondMsg(item.id)">{{item.id==commentEditorId?"取消回复":"回复"}}</div>
-                <comment_editor v-show="item.id==commentEditorId" :parentId="item.id" :articleId="item.articleId"></comment_editor>
+                <comment_editor v-for="(citem,cindex) in commentList" :key="'subcommon'+cindex" v-show="item.id==commentEditorId" :parentId="item.id" :articleId="item.articleId"></comment_editor>
               </section>
             </article>
             <comment-list-data :item="item" ref="subCommentList" ></comment-list-data>
@@ -81,11 +81,7 @@ export default {
     };
   },
   methods: {
-    //事件处理器
     //选择表情包
-    showInitDate: function(oldDate, full) {
-      return initDate(oldDate, full);
-    },
     choseEmoji: function(inner) {
       this.textarea += "[" + inner + "]";
     },

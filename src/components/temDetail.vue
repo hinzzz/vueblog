@@ -2,8 +2,8 @@
 <template>
   <div class="detailBox tcommonBox">
     <span class="s-round-date">
-      <span class="month" v-html="showInitDate(detailObj.createTime,'month')+'月'"></span>
-      <span class="day" v-html="showInitDate(detailObj.createTime,'date')"></span>
+      <span class="month" v-html="$moment(item.createTime).format('MM')+'月'"></span>
+      <span class="day" v-html="$moment(item.createTime).format('DD')"></span>
     </span>
     <header>
       <h1>
@@ -11,7 +11,7 @@
       </h1>
       <h2>
         <i class="fa fa-fw fa-user"></i>发表于
-        <span v-html="showInitDate(detailObj.createTime,'all')"></span> •
+        <span v-html="$moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')"></span> •
         <i class="fa fa-fw fa-eye"></i>
         {{detailObj.visits}} 次围观 •
         <i class="fa fa-fw fa-comments"></i>
@@ -25,7 +25,7 @@
       </h2>
     </header>
     <!-- <div  class="article-content" v-html="detailObj.content"></div> -->
-    <!-- <md-html :content="detailObj.content"></md-html> -->
+    <md-html :content="detailObj.content"></md-html>
     <div class="dshareBox bdsharebuttonbox" data-tag="share_1">
       分享到:
       <a href="javascript:void(0);" class="ds-weibo fa fa-fw fa-weibo" data-cmd="tsina"></a>
@@ -97,11 +97,7 @@ export default {
     };
   },
   methods: {
-    
-    //年月日的编辑
-    showInitDate: function(date, full) {
-      return initDate(date, full);
-    },
+  
     likecollectHandle: function(islike) {
       //用户点击喜欢0,用户点击收藏1
       if (!localStorage.getItem("userInfo")) {

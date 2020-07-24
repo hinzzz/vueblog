@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div>
-    <ul v-show="item.comments" class="tmsg-commentlist" style="padding-left:60px;">
+    <ul v-if="item.comments" class="tmsg-commentlist" style="padding-left:60px;">
       <li class="tmsg-c-item" v-for="(citem,cindex) in item.comments" :key="'citem'+cindex">
         <article class>
           <header>
@@ -16,7 +16,7 @@
             </div>
             <div class="i-class">{{citem.label}}</div>
             <div class="i-time">
-              <time>{{showInitDate(item.createTime,'all')}}</time>
+              <time>{{$moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}}</time>
             </div>
           </header>
           <section>
@@ -25,7 +25,7 @@
               class="tmsg-replay"
               @click="respondMsg(citem.id)"
             >{{citem.id==commentEditorId?"取消回复":"回复"}}</div>
-            <comment_editor v-show="citem.id==commentEditorId" :parentId="citem.id" :articleId="citem.articleId"></comment_editor>
+            <comment_editor v-if="citem.id==commentEditorId" :parentId="citem.id" :articleId="citem.articleId"></comment_editor>
           </section>
         </article>
         <div>
@@ -65,14 +65,26 @@ export default {
     analyzeEmoji: function(content) {
       return this.$parent.analyzeEmoji(content);
     },
-    updateCommentList:function(comment){
-      console.log(this.item)
-      console.log(comment,comment.parentId,this.item.id)
-      if(comment.parentId==0){
-        this.$parent.updateCommentList(comment);
-      }else if(comment.parentId==this.item.id){
-        this.item.comments.push(comment);
-        console.log(this.item);
+    updateCommentList:function(subComment){
+      console.log(subComment.parentId)
+      if(subComment.parentId==0){
+        this.$parent.updateCommentList(subComment);
+      }else {
+        this.item.comments.forEach(comment => {
+          console.log(comment.id)
+          if(comment.id = subComment.parentId){
+            console.log("==============="+comment.comments)
+            if(comment.comments && comment.comments.length>0){
+              comment.comments.push(subComment);
+            }else{
+              comment.comments = new Array();
+              comment.comments.push(subComment);
+            }
+            console.log(comment)
+          }
+        });
+
+        this.commentEditorId = 0;
       }
     },
     resetCommentEditorId(){
@@ -84,9 +96,6 @@ export default {
     respondMsg: function(commentEditorId) {
       this.rootResetRespond(commentEditorId,false);
       this.commentEditorId = this.commentEditorId == 0 ? commentEditorId : 0;
-    },
-    showInitDate: function(oldDate, full) {
-      return this.$parent.showInitDate(oldDate, full);
     }
   },
   //生命周期 - 创建完成（可以访问当前this实例）

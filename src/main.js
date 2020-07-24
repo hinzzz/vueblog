@@ -7,19 +7,15 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/style.less'
 import store from './store'
+import moment from 'moment'
 
 import hljs from 'highlight.js'
 
+Vue.prototype.$moment = moment
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
-//封装成一个指令
-Vue.directive('highlight', (el) => {
-  let blocks = el.querySelectorAll('pre code')
-  blocks.forEach((block) => {
-      hljs.highlightBlock(block)
-  })
-})
+
 
 /* eslint-disable no-new */
 new Vue({

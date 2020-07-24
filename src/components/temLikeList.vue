@@ -9,8 +9,8 @@
                 </div>
                 <el-col :span="24" class="s-item tcommonBox" v-for="(item,index) in articleList" :key="'like'+index">
                     <span class="s-round-date">
-                        <span class="month">{{showInitDate(item.create_time,'month')}}月</span>
-                        <span class="day">{{showInitDate(item.create_time,'date')}}</span>
+                        <span class="month">{{$moment(item.createTime).format('MM')}}月</span>
+                        <span class="day">{{$moment(item.createTime).format('DD')}}</span>
                     </span>
                     <header>
                         <h1>
@@ -20,7 +20,7 @@
                         </h1>
                         <h2>
                             <i class="fa fa-fw fa-user"></i>发表于
-                            <i class="fa fa-fw fa-clock-o"></i>{{showInitDate(item.create_time,'newDate')}} •
+                            <i class="fa fa-fw fa-clock-o"></i>{{$moment(item.createTime).format('YYYY-MM-DD')}} •
                             <i class="fa fa-fw fa-eye"></i>{{item.browse_count}} 次围观 •
                             <i class="fa fa-fw fa-comments"></i>活捉 {{item.comment_count}} 条 •
                             <span class="rateBox">
@@ -70,9 +70,6 @@ import {ShowArticleAll,initDate,getLikeCollectList,getArtLikeCollect} from '../u
             }
         },
         methods: { //事件处理器
-            showInitDate: function(oldDate,full){
-                return initDate(oldDate,full)
-            },
             cancelLikeCollect: function(id){
                 var that = this;
                 // console.log(id);

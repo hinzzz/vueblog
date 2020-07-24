@@ -38,7 +38,7 @@
       </header>
       <p class="meta">
         <time>
-          <i class="fa fa-clock-o"></i>{{showInitDate(item.createTime,'all')}}
+          <i class="fa fa-clock-o"></i>{{$moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}}
         </time>
         <span class="author">
           <i class="fa fa-user"></i>
@@ -102,11 +102,6 @@ export default {
         this.total = response.page.total;
         this.listLoading = false;
       });
-    },
-    //事件处理器
-    showInitDate: function(oldDate, full) {
-      // console.log(oldDate,full);
-      return initDate(oldDate, full);
     },
     //查看文章
     toDetailArticle: function(url) {
