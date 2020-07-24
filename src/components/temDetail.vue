@@ -2,8 +2,8 @@
 <template>
   <div class="detailBox tcommonBox">
     <span class="s-round-date">
-      <span class="month" v-html="$moment(item.createTime).format('MM')+'月'"></span>
-      <span class="day" v-html="$moment(item.createTime).format('DD')"></span>
+      <span class="month" v-html="$moment(detailObj.createTime).format('MM')+'月'"></span>
+      <span class="day" v-html="$moment(detailObj.createTime).format('DD')"></span>
     </span>
     <header>
       <h1>
@@ -11,7 +11,7 @@
       </h1>
       <h2>
         <i class="fa fa-fw fa-user"></i>发表于
-        <span v-html="$moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')"></span> •
+        <span v-html="$moment(detailObj.createTime).format('YYYY-MM-DD HH:mm:ss')"></span> •
         <i class="fa fa-fw fa-eye"></i>
         {{detailObj.visits}} 次围观 •
         <i class="fa fa-fw fa-comments"></i>
@@ -24,7 +24,6 @@
         </span>
       </h2>
     </header>
-    <!-- <div  class="article-content" v-html="detailObj.content"></div> -->
     <md-html :content="detailObj.content"></md-html>
     <div class="dshareBox bdsharebuttonbox" data-tag="share_1">
       分享到:

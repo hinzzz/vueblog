@@ -38,7 +38,7 @@
       </header>
       <p class="meta">
         <time>
-          <i class="fa fa-clock-o"></i>{{$moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}}
+          <i class="fa fa-clock-o" ></i>{{$moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}}
         </time>
         <span class="author">
           <i class="fa fa-user"></i>

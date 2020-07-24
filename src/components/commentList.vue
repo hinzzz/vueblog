@@ -16,7 +16,7 @@
             </div>
             <div class="i-class">{{citem.label}}</div>
             <div class="i-time">
-              <time>{{$moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}}</time>
+              <time>{{$moment(citem.createTime).format('YYYY-MM-DD HH:mm:ss')}}</time>
             </div>
           </header>
           <section>
