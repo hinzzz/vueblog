@@ -53,7 +53,7 @@ time, mark, audio, video {
 
 }
 body{
-  font-family:Arial,"STHeiti", Helvetica, sans-serif;
+  font-family:Microsoft Yahei;
   background:#efefef;
   font-size:14px;
   color:#444!important;

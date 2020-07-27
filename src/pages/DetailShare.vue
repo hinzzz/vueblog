@@ -8,7 +8,7 @@
                     <wbc-detail></wbc-detail>
                     <wbc-message></wbc-message>
                 </el-col>
-                <el-col :sm="24"  :md="8" >
+                <el-col :sm="24"  :md="7" >
                     <wbc-rightlist></wbc-rightlist>
                 </el-col>
             </el-row>
