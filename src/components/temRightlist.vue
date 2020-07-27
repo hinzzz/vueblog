@@ -1,8 +1,8 @@
 <!-- 右侧固定导航栏 -->
 <template>
   <div class="rightlistBox">
-    <section>
-      <div class="r1-head">
+    <section :class="fixDo?'rs2 fixed':'rs2'" @click="lovemeFun">
+        <div class="r1-head">
         <img
           :src="this.$store.state.themeObj.center_smailimg?this.$store.state.themeObj.center_smailimg:'static/img/headtou02.jpg'"
           alt
@@ -55,9 +55,8 @@
           </div>
         </div>
       </div>
-    </section>
-    <section :class="fixDo?'rs2 fixed':'rs2'" @click="lovemeFun">
-      <div class="widget widget_categories" :style="fixDo?'fixed':''">
+      <section class="midle_section"></section>
+      <div class="widget widget_categories" >
         <h3>分类目录</h3>
         <ul>
           <li v-for="(item,index) in categoryList" :key="'index'+index" class="cat-item">
@@ -67,42 +66,8 @@
         </ul>
       </div>
     </section>
-    <section>
-      <div class="widget widget_categories" :style="fixDo?'fixed':''">
-        <h3>分类目录</h3>
-        <ul>
-          <li v-for="(item,index) in categoryList" :key="'index'+index" class="cat-item">
-            <a :href="item.url" :title="item.description" v-html="item.name"></a>
-            ({{item.total}})
-          </li>
-        </ul>
-      </div>
-    </section>
-    <!-- <section class="rs3">
-      <h2 class="ui label">这些人都排着队来跟我说话</h2>
-      <ul class="rs3-textwidget">
-        <li class="rs3-item" v-for="(item,index) in artCommentList" :key="'artCommentList'+index">
-          <a :href="'#/DetailShare?aid='+item.id" target="_blank">
-            <div class="rs3-photo">
-              <img :src="item.avatar" :onerror="$store.state.errorImg" />
-            </div>
-            <div class="rs3-inner">
-              <p class="rs3-author">{{item.nickname}} 在「{{item.title}}」中说:</p>
-              <p class="rs3-text">{{item.content}}</p>
-            </div>
-          </a>
-        </li>
-      </ul>
-    </section>
-    <section class="rs4">
-      <h2 class="ui label">大家都排队来看这些</h2>
-      <ul>
-        <li v-for="(item,index) in browseList" :key="'browseList'+index">
-          <a :href="'#/DetailShare?aid='+item.id" target="_blank">{{item.title}}</a>
-          —— {{item.browse_count}} 次围观
-        </li>
-      </ul>
-    </section> -->
+
+    
     <!-- 右侧上滑小图片 -->
     <div
       v-if="this.$store.state.themeObj.user_start!=0"
@@ -221,7 +186,7 @@ export default {
           that.gotoTop = false;
         }
       }
-      if (t > 1200) {
+      if (t > 0) {
         that.fixDo = true;
       } else {
         that.fixDo = false;
@@ -253,6 +218,9 @@ export default {
 body {
   font-family: "Microsoft Yahei";
   color: #555;
+}
+.midle_section{
+    background-color: #efefef !important;
 }
 h3 {
   display: block;
@@ -373,69 +341,12 @@ h3 {
   font-style: normal;
   margin: 0 3.2px;
 }
-
-/*************do you like me*******************/
-.rightlistBox .rs2 {
-  /*padding:10px 0 4px 0;*/
-  min-height: 100px;
-}
 .rightlistBox .rs2.fixed {
   position: fixed;
-  top: 40px;
-  width: 22%;
+
+  width: 20.639%;
 }
-.rightlistBox .rs2 p {
-  color: #666666;
-  cursor: pointer;
-  font-size: 20px;
-  margin-bottom: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
-  margin-top: 10px;
-  font-weight: 500;
-}
-.rightlistBox .rs2 div {
-  color: #df2050;
-  cursor: pointer;
-  text-align: center;
-  font-size: 40px;
-  position: absolute;
-  width: 100%;
-  height: 100px;
-  line-height: 100px;
-  left: 0;
-  top: 30px;
-}
-.rightlistBox .rs2 div i.heart {
-  display: inline-block;
-  text-align: center;
-  width: 100px;
-  height: 100px;
-  margin-left: -20px;
-  margin-top: -5px;
-  background: url(../../static/img/heart.png) no-repeat;
-  background-position: 0 0;
-  cursor: pointer;
-  -webkit-transition: background-position 1s steps(28);
-  transition: background-position 1s steps(28);
-  -webkit-transition-duration: 0s;
-  transition-duration: 0s;
-  vertical-align: middle;
-}
-.rightlistBox .rs2 div i.heart:hover {
-  transform: scale(1.15);
-  -webkit-transform: scale(1.15);
-}
-.rightlistBox .rs2 div i.heart.active {
-  -webkit-transition-duration: 1s;
-  transition-duration: 1s;
-  background-position: -2800px 0;
-}
-.rightlistBox .rs2 div span {
-  margin-left: -30px;
-}
+
 /**********排队来说*************/
 .rightlistBox .rs3 .rs3-item {
   font-size: 13px;
