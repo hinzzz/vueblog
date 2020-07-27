@@ -8,11 +8,11 @@
           alt
         />
         <h1 v-if="this.$store.state.themeObj.user_start!=0">
-          <span>女王</span>Aimee
+          <span></span>hinz
         </h1>
       </div>
       <div class="r1-body">
-        <p>你能抓到我么？</p>
+        <p>follow me</p>
         <div class="catch-me">
           <div class>
             <el-tooltip class="item" content="Github" placement="top">
