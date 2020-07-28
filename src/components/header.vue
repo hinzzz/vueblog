@@ -13,13 +13,13 @@
               @select="handleSelect"
               :router="true"
             >
-              <el-menu-item index="/Home">
+              <el-menu-item index="/">
                 <i class="fa fa-wa fa-home"></i> 首页
               </el-menu-item>
-			  <el-menu-item index="/category">
+			  <!--<el-menu-item index="/category">
                 <i class="fa fa-wa fa-archive"></i> 分类
               </el-menu-item>
-              <!-- <el-submenu index="/category">
+               <el-submenu index="/category">
                 <template slot="title">
                   <i class="fa fa-wa fa-archive"></i> 分类
                 </template>
@@ -40,12 +40,12 @@
               <!-- <el-menu-item index="/Reward">
                 <i class="fa fa-wa fa-cny"></i> 赞赏
               </el-menu-item> -->
-              <el-menu-item index="/Friendslink">
+              <!-- <el-menu-item index="/Friendslink">
                 <i class="fa fa-wa fa-users"></i> 伙伴
               </el-menu-item>
               <el-menu-item index="/Message">
                 <i class="fa fa-wa fa-pencil"></i> 留言板
-              </el-menu-item>
+              </el-menu-item> -->
               <el-menu-item index="/Aboutme">
                 <i class="fa fa-wa fa-vcard"></i> 关于
               </el-menu-item>
@@ -102,7 +102,7 @@
                   :unique-opened="true"
                   :router="true"
                 >
-                  <el-menu-item index="/Home">
+                  <el-menu-item index="/">
                     <i class="fa fa-wa fa-home"></i> 首页
                   </el-menu-item>
                   <el-submenu index="/category">

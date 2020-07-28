@@ -60,7 +60,7 @@
         <h3>分类目录</h3>
         <ul>
           <li v-for="(item,index) in categoryList" :key="'index'+index" class="cat-item">
-            <a :href="item.url" :title="item.description" v-html="item.name"></a>
+            <a :href="'?cat='+item.url" :title="item.description" v-html="item.name"></a>
             ({{item.total}})
           </li>
         </ul>
@@ -85,7 +85,6 @@
         alt
       />
     </div>
-    <!-- <article-nav></article-nav> -->
   </div>
 </template>
 
@@ -186,7 +185,7 @@ export default {
           that.gotoTop = false;
         }
       }
-      if (t > 0) {
+      if (t > 1200) {
         that.fixDo = true;
       } else {
         that.fixDo = false;

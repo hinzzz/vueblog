@@ -8,10 +8,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/style.less'
 import store from './store'
 import moment from 'moment'
-
-import hljs from 'highlight.js'
+import {dictType} from './directives'
 
 Vue.prototype.$moment = moment
+moment.suppressDeprecationWarnings = true;
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
@@ -23,5 +23,7 @@ new Vue({
   router,
   components: { App },
   template: '<App/>',
-  store
+  store,
+  dictType
 })
+

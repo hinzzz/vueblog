@@ -53,7 +53,7 @@
         methods: { //事件处理器
             runTime:function(){//运行倒计时
                 var that = this;
-                var oldTime =new Date('2016/06/01 00:00:00');
+                var oldTime =new Date('2020/08/01 00:00:00');
                 var timer = setInterval(function(){
                     var nowTime = new Date();
                     var longTime = nowTime - oldTime;

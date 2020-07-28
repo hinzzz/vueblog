@@ -7,7 +7,7 @@
       v-for="(item,index) in articleList"
       :key="'article'+index"
     >
-      <div class="excerpt excerpt-1 excerpt-text">
+      <div v-if="articleList!=null && articleList.length>0"  class="excerpt excerpt-1 excerpt-text">
         <header>
           <a class="cat" href="http://cmsblogs.com/?cat=436">
             {{item.category.name}}
@@ -24,7 +24,7 @@
           </time>
           <span class="author">
             <i class="fa fa-user"></i>
-            <a href="http://cmsblogs.com/?author=1">hinz</a>
+            <a href="http://cmsblogs.com/?author=1" v-dictType="'BLOG_TITLE'">hinz</a>
           </span>
           <span class="pv">
             <i class="fa fa-eye"></i>
@@ -42,18 +42,17 @@
         <p class="note">{{item.description}}</p>
       </div>
     </el-col>
+    <el-col v-if="articleList!=null && articleList.length<=0">暂无数据</el-col>
   </el-row>
 </template>
 
 <script>
-import { ShowArticleAll, ArtClassData, initDate } from "../utils/server.js";
 import { getArticle, detailArticle } from "@/api/article";
 import Pagination from "@/components/Pagination/index";
-import abc from "@/components/myComponets";
 
 export default {
   name: "Share",
-  components: { pagination: Pagination, abc },
+  components: { pagination: Pagination },
   data() {
     //选项 / 数据
     return {
@@ -61,15 +60,10 @@ export default {
       total: 0,
       listQuery: {
         current: 1,
-        size: 10,
-        content: undefined,
-        status: undefined,
-        ascs: undefined,
-        descs: undefined,
+        size: 10
       },
-      classtwoId: 5,
       keywords: "",
-      articleList: "",
+      articleList: null,
     };
   },
 
@@ -77,9 +71,9 @@ export default {
     // 获得数据集合
     getList() {
       this.listLoading = true;
+      this.listQuery.cat = this.$route.query.cat;
       getArticle(this.listQuery).then((response) => {
         this.articleList = response.page.records;
-        console.log(this.articleList);
         this.total = response.page.total;
         this.listLoading = false;
       });
@@ -88,7 +82,9 @@ export default {
     toDetailArticle: function (url) {
       this.$router.push({ name: "detail", query: { url: url + ".html" } });
     },
-    routeChange: function () {},
+    routeChange: function () {
+      this.getList();
+    },
   },
   components: {
     //定义组件
@@ -99,11 +95,7 @@ export default {
     "$store.state.keywords": "routeChange",
   },
   created() {
-    //生命周期函数
-    // console.log(this.$route);
-    this.getList();
-    var that = this;
-    that.routeChange();
+    this.routeChange();
   },
 };
 </script>

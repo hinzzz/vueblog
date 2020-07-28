@@ -7,6 +7,14 @@ export function getConfig() {
   })
 }
 
+export function getConfigByName(name) {
+  return request({
+    url: '/config/getConfigByName',
+    method: 'get',
+    params: {name}
+  })
+}
+
 export function putConfig(id) {
   return request({
     url: '/config',

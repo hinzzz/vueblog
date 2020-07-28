@@ -71,16 +71,13 @@ export default {
         this.$parent.updateCommentList(subComment);
       }else {
         this.item.comments.forEach(comment => {
-          console.log(comment.id)
           if(comment.id = subComment.parentId){
-            console.log("==============="+comment.comments)
             if(comment.comments && comment.comments.length>0){
               comment.comments.push(subComment);
             }else{
               comment.comments = new Array();
               comment.comments.push(subComment);
             }
-            console.log(comment)
           }
         });
 
