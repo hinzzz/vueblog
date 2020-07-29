@@ -237,7 +237,7 @@ export default {
       //  console.log('回车搜索',keyCode,e);
       if (this.input) {
         this.$store.state.keywords = this.input;
-        this.$router.push({ path: "/Share?keywords=" + this.input });
+        window.location.href = window.location.href+'?q='+this.input;
       }
     },
     handleSelect(key, keyPath) {

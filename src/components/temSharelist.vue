@@ -7,7 +7,7 @@
       v-for="(item,index) in articleList"
       :key="'article'+index"
     >
-      <div v-if="articleList!=null && articleList.length>0"  class="excerpt excerpt-1 excerpt-text">
+      <div v-if="articleList!=null && articleList.length>0" class="excerpt excerpt-1 excerpt-text">
         <header>
           <a class="cat" href="http://cmsblogs.com/?cat=436">
             {{item.category.name}}
@@ -24,7 +24,7 @@
           </time>
           <span class="author">
             <i class="fa fa-user"></i>
-            <a href="http://cmsblogs.com/?author=1" v-dictType="'BLOG_TITLE'">hinz</a>
+            <a href="http://cmsblogs.com/?author=1">{{item.author}}</a>
           </span>
           <span class="pv">
             <i class="fa fa-eye"></i>
@@ -60,7 +60,9 @@ export default {
       total: 0,
       listQuery: {
         current: 1,
-        size: 10
+        size: 10,
+        cat: null,
+        q: null,
       },
       keywords: "",
       articleList: null,
@@ -72,6 +74,7 @@ export default {
     getList() {
       this.listLoading = true;
       this.listQuery.cat = this.$route.query.cat;
+      this.listQuery.q = this.$route.query.q;
       getArticle(this.listQuery).then((response) => {
         this.articleList = response.page.records;
         this.total = response.page.total;

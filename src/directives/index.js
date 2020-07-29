@@ -10,16 +10,15 @@ const dictType = Vue.directive('dictType', {
       Vue.set(vnode.context.dicData,dicType,cached);
     } else {
       getConfigByName(dicType).then(res => {
-          console.log("res : "+res)
-        // var options = res.data.map(item => {
-        //   return {
-        //     text: item.name,
-        //     value: item.code
-        //   }
-        // });
-        //var jsonStr = JSON.stringify(options);
-        localStorage.setItem('dic-' + dicType, "jsonStr");
-        Vue.set(vnode.context.dicData,dicType,"aaaaaaaaaaaaaa");
+        var options = res.data.map(item => {
+          return {
+            text: item.name,
+            value: item.code
+          }
+        });
+        var jsonStr = JSON.stringify(options);
+        localStorage.setItem('dic-' + dicType, jsonStr);
+        Vue.set(vnode.context.dicData,dicType,options);
       });
     }
   }
