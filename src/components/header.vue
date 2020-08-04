@@ -16,36 +16,6 @@
               <el-menu-item index="/">
                 <i class="fa fa-wa fa-home"></i> 首页
               </el-menu-item>
-			  <!--<el-menu-item index="/category">
-                <i class="fa fa-wa fa-archive"></i> 分类
-              </el-menu-item>
-               <el-submenu index="/category">
-                <template slot="title">
-                  <i class="fa fa-wa fa-archive"></i> 分类
-                </template>
-                <el-menu-item
-                  v-for="(item,index) in categoryList"
-                  :key="'class1'+index"
-                  :index="'/Share?classId='+item.class_id"
-                >{{item.name}}</el-menu-item>
-              </el-submenu> -->
-              <!-- <el-submenu index="/Aboutme">
-                <template slot="title">
-                  <i class="fa fa-wa fa-flask"></i> 实验室
-                </template>
-                <el-menu-item v-for="(item,index) in projectList" :key="'class2'+index" index>
-                  <a :href="item.nav_url" target="_blank">{{item.nav_name}}</a>
-                </el-menu-item>
-              </el-submenu> -->
-              <!-- <el-menu-item index="/Reward">
-                <i class="fa fa-wa fa-cny"></i> 赞赏
-              </el-menu-item> -->
-              <!-- <el-menu-item index="/Friendslink">
-                <i class="fa fa-wa fa-users"></i> 伙伴
-              </el-menu-item>
-              <el-menu-item index="/Message">
-                <i class="fa fa-wa fa-pencil"></i> 留言板
-              </el-menu-item> -->
               <el-menu-item index="/Aboutme">
                 <i class="fa fa-wa fa-vcard"></i> 关于
               </el-menu-item>
@@ -62,125 +32,18 @@
                   ></el-input>
                 </div>
               </div>
-              <div class="userInfo">
-                <div v-show="!haslogin" class="nologin">
-                  <a href="javascript:void(0);" @click="logoinFun(1)">登录&nbsp;</a>|
-                  <a href="javascript:void(0);" @click="logoinFun(0)">&nbsp;注册</a>
-                </div>
-                <div v-show="haslogin" class="haslogin">
-                  <i class="fa fa-fw fa-user-circle userImg"></i>
-                  <ul class="haslogin-info">
-                    <li>
-                      <a href="#/UserInfo">个人中心</a>
-                    </li>
-                    <li>
-                      <a href="#/LikeCollect?like=1">喜欢列表</a>
-                    </li>
-                    <li>
-                      <a href="#/LikeCollect?like=2">收藏列表</a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0);" @click="userlogout">退出登录</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
             </el-menu>
-          </div>
-          <!-- 移动端导航 -->
-          <div class="mobileBox">
-            <div class="hideMenu">
-              <i @click="pMenu=!pMenu" class="el-icon-menu"></i>
-              <el-collapse-transition>
-                <el-menu
-                  :default-active="activeIndex"
-                  class="mlistmenu"
-                  v-show="!pMenu"
-                  theme="dark"
-                  @open="handleOpen"
-                  @close="handleClose"
-                  :unique-opened="true"
-                  :router="true"
-                >
-                  <el-menu-item index="/">
-                    <i class="fa fa-wa fa-home"></i> 首页
-                  </el-menu-item>
-                  <el-submenu index="/category">
-                    <template slot="title">
-                      <i class="fa fa-wa fa-archive"></i> 分类
-                    </template>
-                    <el-menu-item
-                      v-for="(item,index) in categoryList"
-                      :key="'class1'+index"
-                      :index="'/Share?classId='+item.class_id"
-                    >{{item.name}}</el-menu-item>
-                  </el-submenu>
-                  <el-submenu index="2">
-                    <template slot="title">
-                      <i class="fa fa-wa fa-flask"></i> 实验室
-                    </template>
-                    <el-menu-item v-for="(item,index) in projectList" :key="'class2'+index" index>
-                      <a :href="item.nav_url" target="_blank">{{item.nav_name}}</a>
-                    </el-menu-item>
-                  </el-submenu>
-                  <el-menu-item index="/Reward">
-                    <i class="fa fa-wa fa-cny"></i> 赞赏
-                  </el-menu-item>
-                  <el-menu-item index="/Friendslink">
-                    <i class="fa fa-wa fa-users"></i> 伙伴
-                  </el-menu-item>
-                  <el-menu-item index="/Message">
-                    <i class="fa fa-wa fa-pencil"></i> 留言板
-                  </el-menu-item>
-                  <el-menu-item index="/Aboutme">
-                    <i class="fa fa-wa fa-vcard"></i> 关于
-                  </el-menu-item>
-                  <el-menu-item v-show="!haslogin" index @click="logoinFun(1)">登录</el-menu-item>
-                  <el-menu-item v-show="!haslogin" index @click="logoinFun(0)">注册</el-menu-item>
-                  <el-submenu v-show="haslogin" index="3">
-                    <template slot="title">
-                      <i class="fa fa-wa fa-user-circle-o"></i> 我的
-                    </template>
-                    <el-menu-item index="/UserInfo">个人中心</el-menu-item>
-                    <el-menu-item index="/LikeCollect?like=1">喜欢的文章</el-menu-item>
-                    <el-menu-item index="/LikeCollect?like=2">收藏的文章</el-menu-item>
-                    <el-menu-item index @click="userlogout">退出登录</el-menu-item>
-                  </el-submenu>
-                </el-menu>
-              </el-collapse-transition>
-              <div class="searchBox">
-                <el-input
-                  placeholder
-                  icon="search"
-                  v-model="input"
-                  @keyup.enter.native="searchEnterFun"
-                  :on-icon-click="searchEnterFun"
-                  @change="searchChangeFun"
-                ></el-input>
-              </div>
-            </div>
           </div>
         </el-col>
       </el-row>
     </div>
-    <!-- <div
-      class="headImgBox"
-      :style="{backgroundImage:this.$store.state.themeObj.top_image?'url('+this.$store.state.themeObj.top_image+')':'url(static/img/headbg05.jpg)'}"
-    >
-      <div class="scene">
-        <div>
-          <span id="luke"></span>
-        </div>
-      </div>
-      
-    </div> -->
     <div class="h-information">
-        <h2 class="h-description">
-          <a
-            href="#/Aboutme"
-          >{{this.$store.state.themeObj.autograph?this.$store.state.themeObj.autograph:"Write the Code. Change the World."}}</a>
-        </h2>
-      </div>
+      <h2 class="h-description">
+        <a
+          href="#/Aboutme"
+        >{{this.$store.state.themeObj.autograph?this.$store.state.themeObj.autograph:"Write the Code. Change the World."}}</a>
+      </h2>
+    </div>
   </div>
 </template>
 <script>
@@ -188,8 +51,7 @@ import {
   ArtClassData,
   LoginOut,
   navMenList,
-  changeTheme,
-  AboutMeData
+
 } from "../utils/server.js";
 import { Typeit } from "../utils/plug.js";
 import { getCategory } from "@/api/category";
@@ -208,7 +70,7 @@ export default {
       input: "", //input输入内容
       headBg: "url(static/img/headbg05.jpg)", //头部背景图
       headTou: "", //头像
-      projectList: "" //项目列表
+      projectList: "", //项目列表
     };
   },
   watch: {},
@@ -230,45 +92,49 @@ export default {
         this.$router.push({ path: "/" });
       }
     },
-    searchEnterFun: function(e) {
+    searchEnterFun: function (e) {
       //input 输入 enter
       var keyCode = window.event ? e.keyCode : e.which;
       // console.log('CLICK', this.input, keyCode)
       //  console.log('回车搜索',keyCode,e);
       if (this.input) {
         this.$store.state.keywords = this.input;
-        window.location.href = window.location.href+'?q='+this.input;
+        if (window.location.href.indexOf("?") > 0) {
+          window.location.href = window.location.href + "&q=" + this.input;
+        } else {
+          window.location.href = window.location.href + "?q=" + this.input;
+        }
       }
     },
     handleSelect(key, keyPath) {
       //pc菜单选择
       //    console.log(key, keyPath);
     },
-    logoinFun: function(msg) {
+    logoinFun: function (msg) {
       //用户登录和注册跳转
       // console.log(msg);
       localStorage.setItem("logUrl", this.$route.fullPath);
       // console.log(666,this.$router.currentRoute.fullPath);
       if (msg == 0) {
         this.$router.push({
-          path: "/Login?login=0"
+          path: "/Login?login=0",
         });
       } else {
         this.$router.push({
-          path: "/Login?login=1"
+          path: "/Login?login=1",
         });
       }
     },
     // 用户退出登录
-    userlogout: function() {
+    userlogout: function () {
       this.$confirm("是否确认退出?", "退出提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(() => {
           // console.log(this.$route.path);
-          LoginOut(localStorage.getItem("accessToken"), function(result) {
+          LoginOut(localStorage.getItem("accessToken"), function (result) {
             //    console.log(result);
             if (localStorage.getItem("userInfo")) {
               localStorage.removeItem("userInfo");
@@ -277,12 +143,12 @@ export default {
               window.location.reload();
               this.$message({
                 type: "success",
-                message: "退出成功!"
+                message: "退出成功!",
               });
             }
             if (this.$route.path == "/UserInfo") {
               this.$router.push({
-                path: "/"
+                path: "/",
               });
             }
           });
@@ -291,35 +157,21 @@ export default {
           //
         });
     },
-    toGetCategory: function() {
+    toGetCategory: function () {
       //文章分类
       if (sessionStorage.getItem("categoryList")) {
         this.categoryList = JSON.parse(sessionStorage.getItem("categoryList"));
-      }else{
-		getCategory().then(result =>{
-			this.categoryList = result.category
-			sessionStorage.setItem('classList',JSON.stringify(result));
-		});
-		
-	  }
+      } else {
+        getCategory().then((result) => {
+          this.categoryList = result.category;
+          sessionStorage.setItem("classList", JSON.stringify(result));
+        });
+      }
     },
-    routeChange: function() {
+    routeChange: function () {
       this.pMenu = true;
       this.activeIndex = this.$route.path == "/" ? "/Home" : this.$route.path;
-      if (localStorage.getItem("userInfo")) {
-        //存储用户信息
-        this.haslogin = true;
-        this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        // console.log(this.userInfo);
-      } else {
-        this.haslogin = false;
-      }
       this.toGetCategory();
-      navMenList(function(msg) {
-        //实验室项目列表获取
-        // console.log('实验室',msg);
-        this.projectList = msg;
-      });
       if (
         (this.$route.name == "Share" || this.$route.name == "Home") &&
         this.$store.state.keywords
@@ -329,14 +181,14 @@ export default {
         this.input = "";
         this.$store.state.keywords = "";
       }
-    }
+    },
   },
   components: {
     //定义组件
   },
   watch: {
     // 如果路由有变化，会再次执行该方法
-    $route: "routeChange"
+    $route: "routeChange",
   },
   created() {
     //生命周期函数
@@ -353,7 +205,7 @@ export default {
       /hidden/i,
       "visibilitychange"
     );
-    var onVisibilityChange = function() {
+    var onVisibilityChange = function () {
       if (document[hiddenProperty]) {
         //被隐藏
         document.title = "藏好啦(つд⊂)";
@@ -371,27 +223,10 @@ export default {
     document.addEventListener(visibilityChangeEvent, onVisibilityChange);
     // console.log();
     this.routeChange();
-    //设置主题
-    changeTheme(function(msg) {
-      // console.log(msg);
-      this.$store.state.themeObj = msg;
 
-      // console.log('主题',this.$store.state.themeObj );
-    });
-    //关于我的信息
-    AboutMeData(function(msg) {
-      // console.log('关于我',msg);
-      this.$store.state.aboutmeObj = msg;
-    });
   },
   mounted() {
-    //页面元素加载完成
-    // console.log('是否是慧慧',this.$store.state.themeObj.user_start);
-    var timer = setTimeout(function() {
-      Typeit(this.$store.state.themeObj.user_start, "#luke"); //打字机效果
-      clearTimeout(timer);
-    }, 500);
-  }
+  },
 };
 </script>
 
@@ -690,7 +525,7 @@ export default {
   padding: 20px 0;
   font-size: 16px;
   opacity: 0.98;
-  
+
   border-radius: 5px;
   z-index: 1;
   animation: b 1s ease-out;

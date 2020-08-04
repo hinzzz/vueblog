@@ -1,32 +1,33 @@
 <!-- 关于我 -->
 <template>
-    <div class="tcommonBox">
-        <header>
-            <h1>
-                <a href="#/DetailShare" target="_blank">
-                    关于我
-                </a>
-            </h1>
-        </header>
-        <section>
-            <p class="">
-                <img :src="this.$store.state.aboutmeObj.image?this.$store.state.aboutmeObj.image:'static/img/maoto.png'" alt="" onerror="this.onerror=null;this.src= 'static/img/maoto.png'" class="aboutmeImg">
-            </p>
-            <p v-html="this.$store.state.aboutmeObj.brief">{{this.$store.state.aboutmeObj.brief}}</p>
-            <!-- <p>
-                欢迎来到Mango Ya！我是Aimee，是一个可爱的girl，前端程序媛，喜欢各种有趣的事物，爱好各种动手的小玩意儿
-            </p>
-            <p>
-                90后小美女😍，前端小萌新，
-            </p>
-            <p>
-                爱美食，爱动手做美食，想长胖的尽管来。
-            </p>
-            <p>
-                博客建于2017年2月9日，2018年1月23日更新到Vue
-            </p> -->
-        </section>
-    </div>
+    <div class="block">
+  <el-timeline>
+    <el-timeline-item timestamp="2018/4/12" placement="top">
+      <el-card>
+        <h4>更新 Github 模板</h4>
+        <p>王小虎 提交于 2018/4/12 20:46</p>
+      </el-card>
+    </el-timeline-item>
+    <el-timeline-item timestamp="2018/4/3" placement="top">
+      <el-card>
+        <h4>更新 Github 模板</h4>
+        <p>王小虎 提交于 2018/4/3 20:46</p>
+      </el-card>
+      <el-timeline-item timestamp="2018/4/3" placement="top">
+      <el-card>
+        <h4>更新 Github 模板</h4>
+        <p>王小虎 提交于 2018/4/3 20:46</p>
+      </el-card>
+    </el-timeline-item>
+    </el-timeline-item>
+    <el-timeline-item timestamp="2018/4/2" placement="top">
+      <el-card>
+        <h4>更新 Github 模板</h4>
+        <p>王小虎 提交于 2018/4/2 20:46</p>
+      </el-card>
+    </el-timeline-item>
+  </el-timeline>
+</div>
 </template>
 
 <script>

@@ -53,37 +53,7 @@ const ArtClassData = (callback) => {
     }
 }
 
-//实验室 列表项目
-const navMenList  = (callback) => {
-    if(sessionStorage.getItem('navMenList')){
-        var data = JSON.parse(sessionStorage.getItem('navMenList'));
-        callback && callback(data)
-    }else{
-        let url = portUrl + 'nav/navMenList';
-        axios.get(url).then(num => {
-            // console.log(num);
-            if(num.data.code==1001){
-                sessionStorage.setItem('navMenList',JSON.stringify(num.data.data));
-                callback && callback(num.data.data)
-            }else{
-                alert("查询失败")
-            }
-        })
-    }
-}
 
-//查询文章列表
-const ShowArticleAll = (pageIndex,pageSize,artId,cateId,articleName,level,callback) =>{
-    if(level == 1){
-        //var url = portUrl + 'nav/ActiveClassAllData?art_id='+artId+'&cate_id='+cateId+'&article_name='+articleName;
-        var url = portUrl + 'article/'+pageIndex+'/'+pageSize;
-    }else{
-        var url = portUrl + 'article/ShowArticleAll?art_id='+artId+'&cate_id='+cateId+'&article_name='+articleName;
-    }
-    axios.get(url).then(num => {
-            callback && callback(num.data);
-    })
-}
 
 //查询文章详情
 const getArticleInfo = (artId,userId,callback) =>{
@@ -97,33 +67,6 @@ const getArticleInfo = (artId,userId,callback) =>{
     })
 }
 
-//查询浏览量最多的10篇文章数据
-const ShowBrowseCount = (callback) =>{
-    let url = portUrl + 'article/ShowBrowseCount';
-    axios.get(url).then(num => {
-        if(num.data.code==1001){
-            callback && callback(num.data.data);
-        }else if(num.data.code==1005){
-            return;
-        }else{
-            alert("查询失败");
-        }
-    })
-}
-
-//查询文章评论量最大的10篇文章
-const ShowArtCommentCount = (callback) =>{
-    let url = portUrl + 'article/ShowArtCommentCount';
-    axios.get(url).then(num => {
-        if(num.data.code==1001){
-            callback && callback(num.data.data);
-        }else if(num.data.code==1005){
-            return;
-        }else{
-            alert("查询失败");
-        }
-    })
-}
 //查询文章评论数据
 const ArticleComment = (artId,commentId,callback) =>{
     let url = portUrl + 'comment/ArticleComment?art_id='+artId+'&comment_id='+commentId;
@@ -156,18 +99,6 @@ const setOuthComment = (content,user_id,article_id,leave_id,leave_pid,pid,callba
     })
 }
 
-//查询网址点赞总数
-const showLikeData = (callback) =>{
-    let url = portUrl + 'outh/showLikeData';
-    axios.get(url).then(num => {
-        if(num.data.code==1001){
-            // console.log(num.data,parseInt(num.data));
-            callback && callback(num.data.data);
-        }else{
-            alert("查询失败");
-        }
-    })
-}
 
 //点赞功能修改
 const GetLike = (like_num,callback) =>{
@@ -195,25 +126,6 @@ const FriendUrlData = (callback) =>{
     })
 }
 
-//查询关于我
-const AboutMeData = (callback) =>{
-    if(sessionStorage.getItem('AboutMeData')){
-        var data = JSON.parse(sessionStorage.getItem('AboutMeData'));
-        callback && callback(data)
-    }else{
-        let url = portUrl + 'outh/AboutMeData';
-        axios.get(url).then(num => {
-            if(num.data.code==1001){
-                sessionStorage.setItem('AboutMeData',JSON.stringify(num.data.data));
-                callback && callback(num.data.data);
-            }else if(num.data.code==1005){
-                return;
-            }else{
-                alert("查询失败");
-            }
-        })
-    }
-}
 
 //查询赞赏数据
 const AdmireData = (callback) => {
@@ -302,47 +214,24 @@ const initDate = (oldDate,full) => {
     }
 }
 
-//获取主题信息
-const changeTheme = (callback) => {
-    if(sessionStorage.getItem('changeThemeObj')){
-        var data = JSON.parse(sessionStorage.getItem('changeThemeObj'));
-        callback && callback(data)
-    }else{
-        let url = portUrl + 'outh/ThemeMy';
-        axios.get(url).then(num => {
-            if(num.data.code==1001){
-                sessionStorage.setItem('changeThemeObj',JSON.stringify(num.data.data))
-                callback && callback(num.data.data);
-            }else{
-                alert("查询失败");
-            }
-        })
-    }
-}
 
 export {
         getRegister,//注册
         UserLogin,//登录
         LoginOut,//退出登录
         ArtClassData,//分类
-        navMenList,//导航信息
         ShowArticleAll,//查询文章列表
         getArticleInfo,//文章详情
-        ShowBrowseCount,//流量量做多的文章
-        ShowArtCommentCount,//评论最多的文章
         ArticleComment,//文章评论列表
         OtherComment,//其他评论列表
         setArticleComment,//设置文章评论
         setOuthComment,//设置其他评论
-        showLikeData,//do you like me
         GetLike,//设置 do you like me
         FriendUrlData,//友情链接数据
-        AboutMeData,//关于我文章编写
         getArtLikeCollect,//文章收藏 文章点赞
         AdmireData,//赞赏数据
         getLikeCollectList,//用户收藏喜欢列表
         getUserInfo,//用户信息查询
         UserInfoSave,//修改用户信息
         initDate,//设置时间
-        changeTheme,//获取主题信息
     }

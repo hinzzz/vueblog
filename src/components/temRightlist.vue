@@ -1,7 +1,7 @@
 <!-- 右侧固定导航栏 -->
 <template>
   <div class="rightlistBox">
-    <section :class="fixDo?'rs2 fixed':'rs2'" @click="lovemeFun">
+    <section :class="fixDo?'rs2 fixed':'rs2'" >
         <div class="r1-head">
         <img
           :src="this.$store.state.themeObj.center_smailimg?this.$store.state.themeObj.center_smailimg:'static/img/headtou02.jpg'"
@@ -15,41 +15,14 @@
         <p>follow me</p>
         <div class="catch-me">
           <div class>
-            <el-tooltip class="item" content="Github" placement="top">
-              <a :href="catchMeObj[isAimee].git" target="_blank">
+            <el-tooltip class="item" content="https://github.com/hinzzz" placement="bottom">
+              <a :href="git" target="_blank">
                 <i class="fa fa-fw fa-github"></i>
               </a>
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="QQ" placement="top">
-              <a :href="catchMeObj[isAimee].qq" target="_blank">
+            <el-tooltip class="item" effect="dark" content="157957329@qq.com" placement="top">
+              <a href="javascript:void(0)"    >
                 <i class="fa fa-fw fa-qq"></i>
-              </a>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="微博" placement="top">
-              <a :href="catchMeObj[isAimee].sina" target="_blank">
-                <i class="fa fa-fw fa-weibo"></i>
-              </a>
-            </el-tooltip>
-          </div>
-          <div class>
-            <el-tooltip class="item" effect="dark" content="微信" placement="top">
-              <a :href="catchMeObj[isAimee].wechat" target="_blank">
-                <i class="fa fa-fw fa-wechat"></i>
-              </a>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="CSDN" placement="top">
-              <a :href="catchMeObj[isAimee].csdn" target="_blank">
-                <i class>C</i>
-              </a>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="简历" placement="top">
-              <a :href="catchMeObj[isAimee].job" target="_blank">
-                <i class="fa fa-fw fa-file-word-o"></i>
-              </a>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="更多" placement="top">
-              <a href="#/Aboutme">
-                <i class="el-icon-more"></i>
               </a>
             </el-tooltip>
           </div>
@@ -91,9 +64,6 @@
 
 <script>
 import {
-  ShowBrowseCount,
-  ShowArtCommentCount,
-  showLikeData,
   GetLike,
 } from "../utils/server.js";
 import articleNav from "../components/articleNav.vue";
@@ -111,43 +81,11 @@ export default {
       artCommentList: "", //评论量最多
       likeNum: 0, //do you like me 点击量
       initLikeNum: 0, //初始化喜欢数量
-      catchMeObj: {
-        //抓住我 个人信息
-        Qinlh: {
-          git: "https://gitee.com/qinlh",
-          qq: "static/img/qinlh/qq.jpg",
-          sina: "https://weibo.com/u/2313631533",
-          wechat: "static/img/qinlh/wechat.jpg",
-          csdn: "http://www.qinlinhui.cn",
-          job: "http://qinlh.mangoya.cn/MyResume/",
-        },
-        Aimee: {
-          git: "https://github.com/Aimee1608",
-          qq: "static/img/aimee/QQ.jpg",
-          sina: "https://weibo.com/u/2242812941",
-          wechat: "static/img/aimee/erwm.jpg",
-          csdn: "http://blog.csdn.net/Aimee1608",
-          job: "http://aimee.mangoya.cn",
-        },
-      },
+      git: "https://github.com/hinzzz",
       isAimee: this.$store.state.themeObj.user_start != 0 ? "Aimee" : "Qinlh", //判断是哪个的博客
     };
   },
   methods: {
-    //事件处理器
-    //do you love me  点击
-    lovemeFun: function () {
-      var that = this;
-      if (!this.loveme) {
-        that.likeNum += 1;
-        GetLike(1, function () {});
-      }
-      this.loveme = true;
-      var timer = setTimeout(function () {
-        that.loveme = false;
-        clearTimeout(timer);
-      }, 3000);
-    },
     toTopfun: function (e) {
       var that = this;
       this.gotoTop = false;
@@ -191,19 +129,6 @@ export default {
         that.fixDo = false;
       }
     };
-    //查询浏览量最多的10篇文章数据
-    ShowBrowseCount(function (data) {
-      // console.log('浏览最多10文章数据',data);
-      that.browseList = data;
-    });
-    //查询文章评论量最大的10篇文章
-    ShowArtCommentCount(function (data) {
-      // console.log('评论最多10文章数据',data);
-      that.artCommentList = data;
-    });
-    showLikeData(function (data) {
-      that.likeNum = that.initLikeNum = data;
-    });
   },
   mounted(){
       getCategory().then(response=>{

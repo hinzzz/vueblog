@@ -62,14 +62,6 @@ export default new Router({
 			name: 'category'
 		},
 		{
-			path: '/Reward',
-			component: resolve => require(['../pages/Reward.vue'], resolve),
-			meta: {
-				auth: true
-			},
-			name: 'Reward'
-		}, //赞赏
-		{
 			path: '/FriendsLink',
 			component: resolve => require(['../pages/FriendsLink.vue'], resolve),
 			meta: {

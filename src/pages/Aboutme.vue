@@ -6,7 +6,6 @@
             <el-row  :gutter="30">
                 <el-col :sm="24" :md="16" style="transition:all .5s ease-out;margin-bottom:30px;">
                     <wbc-about></wbc-about>
-                    <wbc-message></wbc-message>
                 </el-col>
                 <el-col :sm="24"  :md="8" >
                     <wbc-rightlist></wbc-rightlist>
@@ -22,7 +21,6 @@ import header from '../components/header.vue'
 import footer from '../components/footer.vue'
 import temRightlist from '../components/temRightlist.vue'
 import temAbout from '../components/temAbout.vue'
-import temMessage from '../components/temMessage.vue'
     export default {
         name: 'Aboutme',
         data() { //选项 / 数据
@@ -35,7 +33,6 @@ import temMessage from '../components/temMessage.vue'
         },
         components: { //定义组件
             'wbc-nav':header,
-            'wbc-message':temMessage,
             'wbc-about':temAbout,
             'wbc-rightlist':temRightlist,
             'wbc-footer':footer
