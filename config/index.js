@@ -37,9 +37,10 @@ module.exports = {
         // 引入当前目录下的dev.env.js，用来指明开发环境，详见(2)
         env: require('./dev.env'),
         // 下面是dev-server的端口号，可以自行更改
-        port: 8080,
+        port: 80,
+        host: 'localhost',
         // 下面表示是否自定代开浏览器
-        autoOpenBrowser: true,
+        autoOpenBrowser: false,
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         // 下面是代理表，作用是用来，建一个虚拟api服务器用来代理本机的请求，只能用于开发模式

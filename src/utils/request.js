@@ -4,12 +4,9 @@ import store from '../store'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: 'http://localhost:8081/', // api 的 base_url
+  baseURL: 'http://120.79.48.191/', // api 的 base_url
   timeout: 5000 // 请求超时时间
 })
-
-
-
 // request拦截器
 // service.interceptors.request.use(
 //   config => {

@@ -6,9 +6,7 @@
       <span class="day" v-html="$moment(detailObj.createTime).format('DD')"></span>
     </span>
     <header>
-      <h1>
-        {{detailObj.title}}
-      </h1>
+      <h1>{{detailObj.title}}</h1>
       <h2>
         <i class="fa fa-fw fa-user"></i>发表于
         <span v-html="$moment(detailObj.createTime).format('YYYY-MM-DD HH:mm:ss')"></span> •
@@ -26,61 +24,33 @@
     </header>
     <md-html :content="detailObj.content"></md-html>
     <div class="dshareBox bdsharebuttonbox" data-tag="share_1">
-      分享到:
+      <!-- 分享到:
       <a href="javascript:void(0);" class="ds-weibo fa fa-fw fa-weibo" data-cmd="tsina"></a>
       <a href="javascript:void(0);" class="ds-qq fa fa-fw fa-qq" data-cmd="tqq"></a>
-      <a href="javascript:void(0);" class="ds-wechat fa fa-fw fa-wechat" data-cmd="weixin"></a>
+      <a href="javascript:void(0);" class="ds-wechat fa fa-fw fa-wechat" data-cmd="weixin"></a> -->
       <div class="dlikeColBox">
         <div class="dlikeBox" @click="likecollectHandle(1)">
           <i :class="likeArt?'fa fa-fw fa-heart':'fa fa-fw fa-heart-o'"></i>
           点赞 | {{detailObj.likes}}
         </div>
-        <div class="dcollectBox" @click="likecollectHandle(2)">
+        <!-- <div class="dcollectBox" @click="likecollectHandle(2)">
           <i :class="collectArt?'fa fa-fw fa-star':'fa fa-fw fa-star-o'"></i>
           收藏 | {{detailObj.collects}}
-        </div>
+        </div> -->
       </div>
-    </div>
-    <div class="donate">
-      <div class="donate-word">
-        <span @click="pdonate=!pdonate">赞赏</span>
-      </div>
-      <el-row :class="pdonate?'donate-body':'donate-body donate-body-show'" :gutter="30">
-        <el-col :span="12" class="donate-item">
-          <div class="donate-tip">
-            <img
-              :src="detailObj.wechat_image?detailObj.wechat_image: 'static/img/tou.jpg'"
-              :onerror="$store.state.errorImg"
-            />
-            <span>微信扫一扫，向我赞赏</span>
-          </div>
-        </el-col>
-        <el-col :span="12" class="donate-item">
-          <div class="donate-tip">
-            <img
-              :src="detailObj.alipay_image?detailObj.alipay_image:'static/img/tou.jpg'"
-              :onerror="$store.state.errorImg"
-            />
-            <span>支付宝扫一扫，向我赞赏</span>
-          </div>
-        </el-col>
-      </el-row>
     </div>
   </div>
 </template>
 
 <script>
-import {
-  getArticleInfo,
-  initDate
-} from "../utils/server.js";
-import { detailArticle,getArtLikeCollect } from "@/api/article";
-import mdHtml from "../components/mdHtml.vue"
+import { getArticleInfo, initDate } from "../utils/server.js";
+import { detailArticle, getArtLikeCollect } from "@/api/article";
+import mdHtml from "../components/mdHtml.vue";
 
 export default {
   components: {
     //定义组件
-    'md-html':mdHtml
+    "md-html": mdHtml,
   },
   data() {
     //选项 / 数据
@@ -92,85 +62,56 @@ export default {
       collectArt: false, //是否收藏
       haslogin: false, //是否已经登录
       userId: "", //用户id
-      create_time: ""
+      create_time: "",
     };
   },
   methods: {
-  
-    likecollectHandle: function(islike) {
+    likecollectHandle: function (islike) {
       //用户点击喜欢0,用户点击收藏1
-      if (!localStorage.getItem("userInfo")) {
-        //判断是否登录
-        var tip = "";
-        let operFlag = 0;  //0 点赞或收藏 1 取消点赞或收藏
-        if (islike == 1) {
-          if (!this.likeArt) {
-            this.detailObj.likes += 1;
-            this.likeArt = true;
-            tip = "已点赞";
-            operFlag = 1;
-          } else {
-            this.detailObj.likes -= 1;
-            this.likeArt = false;
-            tip = "已取消点赞";
-            operFlag = 0
-          }
+      var tip = "";
+      let operFlag = 0; //0 点赞或收藏 1 取消点赞或收藏
+      if (islike == 1) {
+        if (!this.likeArt) {
+          this.detailObj.likes += 1;
+          this.likeArt = true;
+          tip = "已点赞";
+          operFlag = 1;
         } else {
-          if (!this.collectArt) {
-            this.detailObj.collects += 1;
-            this.collectArt = true;
-            tip = "已收藏";
-            operFlag=1;
-          } else {
-            this.detailObj.collects -= 1;
-            this.collectArt = false;
-            tip = "已取消收藏";
-            operFlag=0;
-          }
+          this.detailObj.likes -= 1;
+          this.likeArt = false;
+          tip = "已取消点赞";
+          operFlag = 0;
         }
-        getArtLikeCollect(islike,this.detailObj.id,operFlag);
       } else {
-        //未登录 前去登录。
-        this
-          .$confirm("登录后即可点赞和收藏，是否前往登录页面?", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning"
-          })
-          .then(() => {
-            //确定，跳转至登录页面
-            //储存当前页面路径，登录成功后跳回来
-            localStorage.setItem("logUrl", this.$route.fullPath);
-            this.$router.push({ path: "/Login?login=1" });
-          })
-          .catch(() => {
-            //取消关闭弹窗
-          });
+        if (!this.collectArt) {
+          this.detailObj.collects += 1;
+          this.collectArt = true;
+          tip = "已收藏";
+          operFlag = 1;
+        } else {
+          this.detailObj.collects -= 1;
+          this.collectArt = false;
+          tip = "已取消收藏";
+          operFlag = 0;
+        }
       }
+      getArtLikeCollect(islike, this.detailObj.id, operFlag);
     },
-    routeChange: function() {
-      //判断用户是否存在
-      if (localStorage.getItem("userInfo")) {
-        this.haslogin = true;
-        this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        this.userId = this.userInfo.userId;
-      } else {
-        this.haslogin = false;
-      }
+    routeChange: function () {
       //获取详情接口
-      detailArticle(this.$route.query.url).then(result => {
+      detailArticle(this.$route.query.url).then((result) => {
         this.detailObj = result.article;
       });
     }
   },
   watch: {
     // 如果路由有变化，会再次执行该方法
-    $route: "routeChange"
+    $route: "routeChange",
   },
   created() {
     //生命周期函数
     this.routeChange();
-  }
+  },
 };
 </script>
 
@@ -363,10 +304,4 @@ export default {
 .bd_weixin_popup {
   position: fixed !important;
 }
-
-
-
-
-
-
 </style>
