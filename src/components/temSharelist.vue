@@ -34,34 +34,41 @@
             <i class="fa fa-comments-o"></i>
             评论({{item.comments}})
           </a>
-          <a href="javascript:;" etap="like" class="post-like" >
+          <a href="javascript:;" etap="like" class="post-like">
             <i class="fa fa-thumbs-o-up"></i>赞(
             <span>{{item.likes}}</span>)
           </a>
         </p>
         <p class="note">{{item.description}}</p>
       </div>
-
-      
     </el-col>
     <el-col v-if="articleList!=null && articleList.length<=0">暂无数据</el-col>
-    <el-col style="align:middle"><el-pagination background layout="prev, pager, next" :total="1000"></el-pagination></el-col>
-    <!-- <Pagination v-show="total>0" :total="total" :page.sync="listQuery.current" :limit.sync="listQuery.size" @pagination="getList" /> -->
-    <!-- <Page></Page> -->
-    <comment_editor  :parentId="'1'" :articleId="'1'"></comment_editor>
+
+    <el-col>
+      <div :class="{'hidden':hidden}" class="pagination-container">
+        <el-pagination
+          :background="background"
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :layout="layout"
+          :page-sizes="pageSizes"
+          :total="total"
+          v-bind="$attrs"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
+    </el-col>
   </el-row>
-  
 </template>
 
 <script>
 import { getArticle, detailArticle } from "@/api/article";
-import Pagination from '@/components/Pagination'
-import Page from './Page/index.vue'
-import commentEditor from "../components/commentEditor.vue";
+import { scrollTo } from '@/utils/scrollTo'
 
 export default {
   name: "Share",
-  components: { comment_editor: commentEditor },
+  components: {},
   data() {
     //选项 / 数据
     return {
@@ -75,6 +82,14 @@ export default {
       },
       keywords: "",
       articleList: null,
+      total: 100,
+      page: 1,
+      limit: 10,
+      pageSizes: [10, 20, 30, 50],
+      layout: "total, sizes, prev, pager, next, jumper",
+      background: true,
+      autoScroll: true,
+      hidden: false,
     };
   },
 
@@ -97,6 +112,22 @@ export default {
     routeChange: function () {
       this.getList();
     },
+    handleSizeChange(val) {
+      this.listQuery.current = this.currentPage;
+      this.listQuery.size = val;
+      this.getList();
+      if (this.autoScroll) {
+        scrollTo(0, 800);
+      }
+    },
+    handleCurrentChange(val) {
+      this.listQuery.current = val;
+      this.listQuery.size = this.pageSize ;
+      this.getList();
+      if (this.autoScroll) {
+        scrollTo(0, 800);
+      }
+    },
   },
   components: {
     //定义组件
@@ -109,10 +140,30 @@ export default {
   created() {
     this.routeChange();
   },
+  computed: {
+    currentPage: {
+      get() {
+        return this.page;
+      }
+    },
+    pageSize: {
+      get() {
+        return this.limit;
+      }
+    },
+  },
 };
 </script>
 
 <style>
+.pagination-container {
+  background: #efefef;
+  padding: 32px 16px;
+  text-align:center;
+}
+.pagination-container.hidden {
+  display: none;
+}
 a:-webkit-any-link {
   cursor: pointer;
 }
