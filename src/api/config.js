@@ -41,7 +41,7 @@ export function deleteConfig(id) {
 
 export function getGlobal() {
   return request({
-    url: '/config/global',
+    url: '/api/config/global',
     method: 'get'
   })
 }

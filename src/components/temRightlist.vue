@@ -15,12 +15,12 @@
         <p>follow me</p>
         <div class="catch-me">
           <div class>
-            <el-tooltip class="item" content="https://github.com/hinzzz" placement="bottom">
-              <a :href="git" target="_blank">
+            <el-tooltip class="item" :content="$store.state.git" placement="bottom">
+              <a :href="$store.state.git" target="_blank">
                 <i class="fa fa-fw fa-github"></i>
               </a>
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="157957329@qq.com" placement="top">
+            <el-tooltip class="item" effect="dark" :content="$store.state.email" placement="top">
               <a href="javascript:void(0)"    >
                 <i class="fa fa-fw fa-qq"></i>
               </a>
@@ -66,7 +66,6 @@
 import {
   GetLike,
 } from "../utils/server.js";
-import articleNav from "../components/articleNav.vue";
 import { getCategory } from "../api/category.js";
 export default {
   data() {
@@ -81,7 +80,6 @@ export default {
       artCommentList: "", //评论量最多
       likeNum: 0, //do you like me 点击量
       initLikeNum: 0, //初始化喜欢数量
-      git: "https://github.com/hinzzz",
       isAimee: this.$store.state.themeObj.user_start != 0 ? "Aimee" : "Qinlh", //判断是哪个的博客
     };
   },
@@ -108,7 +106,6 @@ export default {
   },
   components: {
     //定义组件
-    "article-nav": articleNav,
   },
   created() {
     //生命周期函数

@@ -8,7 +8,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/style.less'
 import store from './store'
 import moment from 'moment'
-import {dictType} from './directives'
 
 Vue.prototype.$moment = moment
 moment.suppressDeprecationWarnings = true;
@@ -24,6 +23,5 @@ new Vue({
   components: { App },
   template: '<App/>',
   store,
-  dictType
 })
 

@@ -23,7 +23,7 @@ export default new Router({
 	routes: [
 		{
 			path: '/',
-			component: resolve => require(['../pages/Home.vue'], resolve),
+			component: resolve => require(['../views/Home.vue'], resolve),
 			meta: {
 				auth: true
 			},
@@ -31,7 +31,7 @@ export default new Router({
 		}, //首页
 		{
 			path: '/Home',
-			component: resolve => require(['../pages/Home.vue'], resolve),
+			component: resolve => require(['../views/Home.vue'], resolve),
 			meta: {
 				auth: true
 			},
@@ -39,7 +39,7 @@ export default new Router({
 		}, //首页
 		{
 			path: '/Share',
-			component: resolve => require(['../pages/Share.vue'], resolve),
+			component: resolve => require(['../views/Share.vue'], resolve),
 			meta: {
 				auth: true
 			},
@@ -47,67 +47,19 @@ export default new Router({
 		}, //文章列表
 		{
 			path: '/artilce',
-			component: resolve => require(['../pages/DetailShare.vue'], resolve),
+			component: resolve => require(['../views/DetailShare.vue'], resolve),
 			meta: {
 				auth: true
 			},
 			name: 'detail'
 		}, //文章详情
 		{
-			path: '/category',
-			component: resolve => require(['../pages/Category.vue'], resolve),
-			meta: {
-				auth: true
-			},
-			name: 'category'
-		},
-		{
-			path: '/FriendsLink',
-			component: resolve => require(['../pages/FriendsLink.vue'], resolve),
-			meta: {
-				auth: true
-			},
-			name: 'FriendsLink'
-		}, //伙伴
-		{
-			path: '/Message',
-			component: resolve => require(['../pages/Message.vue'], resolve),
-			meta: {
-				auth: true
-			},
-			name: 'Message'
-		}, //留言板
-		{
 			path: '/Aboutme',
-			component: resolve => require(['../pages/Aboutme.vue'], resolve),
+			component: resolve => require(['../views/Aboutme.vue'], resolve),
 			meta: {
 				auth: true
 			},
 			name: 'Aboutme'
-		}, //关于
-		{
-			path: '/Login',
-			component: resolve => require(['../pages/Login.vue'], resolve),
-			meta: {
-				auth: false
-			},
-			name: 'Login'
-		}, //注册登录
-		{
-			path: '/UserInfo',
-			component: resolve => require(['../pages/UserInfo.vue'], resolve),
-			meta: {
-				auth: true
-			},
-			name: 'UserInfo'
-		}, //用户个人中心
-		{
-			path: '/LikeCollect',
-			component: resolve => require(['../pages/LikeCollect.vue'], resolve),
-			meta: {
-				auth: true
-			},
-			name: 'LikeCollect'
-		} //用户个人中心
+		}, //关于		
 	]
 })

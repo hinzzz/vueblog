@@ -45,7 +45,13 @@ module.exports = {
         assetsPublicPath: '/',
         // 下面是代理表，作用是用来，建一个虚拟api服务器用来代理本机的请求，只能用于开发模式
         // 详见(3)
-        proxyTable: {},
+        proxyTable: {
+            '/api': {
+              target: 'http://120.79.48.191',  //目标接口域名
+              changeOrigin: true,  //是否跨域
+              pathRewrite: {"^/api" : "/api"}
+            }
+          },
         // CSS Sourcemaps off by default because relative paths are "buggy"
         // with this option, according to the CSS-Loader README
         // (https://github.com/webpack/css-loader#sourcemaps)

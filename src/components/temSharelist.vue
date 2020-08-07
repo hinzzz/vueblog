@@ -9,7 +9,7 @@
     >
       <div v-if="articleList!=null && articleList.length>0" class="excerpt excerpt-1 excerpt-text">
         <header>
-          <a class="cat" href="http://cmsblogs.com/?cat=436">
+          <a class="cat" :href="'http://www.hinzzz.cn/?cat='+item.category.name">
             {{item.category.name}}
             <i></i>
           </a>
@@ -24,35 +24,44 @@
           </time>
           <span class="author">
             <i class="fa fa-user"></i>
-            <a href="http://cmsblogs.com/?author=1">{{item.author}}</a>
+            <a href="http://www.hinzzz.cn">{{item.author}}</a>
           </span>
           <span class="pv">
             <i class="fa fa-eye"></i>
             阅读({{item.visits}})
           </span>
-          <a class="pc" href="http://cmsblogs.com/?p=18352#respond">
+          <a class="pc" v-on:click.stop="toDetailArticle(item.url)">
             <i class="fa fa-comments-o"></i>
             评论({{item.comments}})
           </a>
-          <a href="javascript:;" etap="like" class="post-like" data-pid="18352">
+          <a href="javascript:;" etap="like" class="post-like" >
             <i class="fa fa-thumbs-o-up"></i>赞(
             <span>{{item.likes}}</span>)
           </a>
         </p>
         <p class="note">{{item.description}}</p>
       </div>
+
+      
     </el-col>
     <el-col v-if="articleList!=null && articleList.length<=0">暂无数据</el-col>
+    <el-col style="align:middle"><el-pagination background layout="prev, pager, next" :total="1000"></el-pagination></el-col>
+    <!-- <Pagination v-show="total>0" :total="total" :page.sync="listQuery.current" :limit.sync="listQuery.size" @pagination="getList" /> -->
+    <!-- <Page></Page> -->
+    <comment_editor  :parentId="'1'" :articleId="'1'"></comment_editor>
   </el-row>
+  
 </template>
 
 <script>
 import { getArticle, detailArticle } from "@/api/article";
-import Pagination from "@/components/Pagination/index";
+import Pagination from '@/components/Pagination'
+import Page from './Page/index.vue'
+import commentEditor from "../components/commentEditor.vue";
 
 export default {
   name: "Share",
-  components: { pagination: Pagination },
+  components: { comment_editor: commentEditor },
   data() {
     //选项 / 数据
     return {
