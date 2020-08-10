@@ -78,9 +78,7 @@ legend{
 //   font-style:normal;
 //   font-weight:normal
 // }
-ol, ul{
-  list-style:none
-}
+
 caption, th{
   text-align:left
 }

@@ -104,10 +104,6 @@ img {
 legend {
   display: none;
 }
-ol,
-ul {
-  list-style: none;
-}
 caption,
 th {
   text-align: left;
@@ -476,32 +472,6 @@ div.rightlistBox .rs2.fixed {
   color: #fff;
   line-height: 100%;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1437,6 +1407,14 @@ to {
 }
 }
 
+.pagination-container {
+  background: #efefef;
+  padding: 32px 16px;
+  text-align:center;
+}
+.pagination-container.hidden {
+  display: none;
+}
 a:-webkit-any-link {
   cursor: pointer;
 }

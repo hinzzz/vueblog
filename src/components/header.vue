@@ -47,13 +47,7 @@
   </div>
 </template>
 <script>
-import {
-  ArtClassData,
-  LoginOut,
-  navMenList,
 
-} from "../utils/server.js";
-import { Typeit } from "../utils/plug.js";
 import { getCategory } from "@/api/category";
 
 export default {
@@ -69,8 +63,6 @@ export default {
       // path:'',//当前打开页面的路径
       input: "", //input输入内容
       headBg: "url(static/img/headbg05.jpg)", //头部背景图
-      headTou: "", //头像
-      projectList: "", //项目列表
     };
   },
   watch: {},
@@ -133,25 +125,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          // console.log(this.$route.path);
-          LoginOut(localStorage.getItem("accessToken"), function (result) {
-            //    console.log(result);
-            if (localStorage.getItem("userInfo")) {
-              localStorage.removeItem("userInfo");
-              this.haslogin = false;
-              //    this.$router.replace({path:this.$route.fullPath});
-              window.location.reload();
-              this.$message({
-                type: "success",
-                message: "退出成功!",
-              });
-            }
-            if (this.$route.path == "/UserInfo") {
-              this.$router.push({
-                path: "/",
-              });
-            }
-          });
+        
         })
         .catch(() => {
           //

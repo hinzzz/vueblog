@@ -8,13 +8,10 @@
                 光阴长河 <span v-html='longTime'>{{longTime}}</span><span class="timeJump">(●'◡'●)ﾉ♥</span>
             </p>
             <p>
-                托管于 <a :href="$store.state.git" target="_blank">GitHub</a>. <a href="https://tongji.baidu.com/web/welcome/login" target="_blank">百度统计</a> 提供网站统计服务. 
+                {{$store.state.banquan}}  <a :href="this.$store.state.beianUrl" target="_blank">{{$store.state.beianHao}}</a>.
             </p>
-            <!-- <p>
-                © 2018 <a href="#">Mango Ya</a>. 由 <a href="https://cn.vuejs.org/" target="_blank">Vue</a> 强力驱动. Theme By <a href="https://diygod.me/" target="_blank">diygod.me</a>. 京ICP备17071595号-1.
-            </p> -->
             <p>
-                <span>Made with</span> <img class="fheart" src="static/img/heart02.png"/>  <span>by hinzzz.</span>
+                <span>Made with</span> <img class="fheart" src="static/img/heart02.png"/>  <span>by <a :href="this.$store.state.host" target="_blank">hinzzz.</a></span>
             </p>
         </div>
     </div>

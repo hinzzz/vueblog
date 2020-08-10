@@ -63,9 +63,6 @@
 
 
 <script>
-import {
-  GetLike,
-} from "../utils/server.js";
 import { getCategory } from "../api/category.js";
 export default {
   data() {

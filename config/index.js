@@ -1,7 +1,8 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 // path是node.js的路径模块，用来处理路径统一的问题
-var path = require('path')
+//import {store} from '@/store'
 
+var path = require('path');
 module.exports = {
     // 下面是build也就是生产编译环境下的一些配置
     build: {
@@ -47,7 +48,7 @@ module.exports = {
         // 详见(3)
         proxyTable: {
             '/api': {
-              target: 'http://120.79.48.191',  //目标接口域名
+              target: 'http://www.hinzzz.cn',  //目标接口域名
               changeOrigin: true,  //是否跨域
               pathRewrite: {"^/api" : "/api"}
             }

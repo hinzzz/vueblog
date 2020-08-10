@@ -9,7 +9,7 @@
     >
       <div v-if="articleList!=null && articleList.length>0" class="excerpt excerpt-1 excerpt-text">
         <header>
-          <a class="cat" :href="'http://www.hinzzz.cn/?cat='+item.category.name">
+          <a class="cat" :href="$store.state.host+'/?cat='+item.category.name">
             {{item.category.name}}
             <i></i>
           </a>
@@ -24,7 +24,7 @@
           </time>
           <span class="author">
             <i class="fa fa-user"></i>
-            <a href="http://www.hinzzz.cn">{{item.author}}</a>
+            <a :href="$store.state.host">{{item.author}}</a>
           </span>
           <span class="pv">
             <i class="fa fa-eye"></i>

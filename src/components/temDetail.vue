@@ -27,7 +27,7 @@
       <!-- 分享到:
       <a href="javascript:void(0);" class="ds-weibo fa fa-fw fa-weibo" data-cmd="tsina"></a>
       <a href="javascript:void(0);" class="ds-qq fa fa-fw fa-qq" data-cmd="tqq"></a>
-      <a href="javascript:void(0);" class="ds-wechat fa fa-fw fa-wechat" data-cmd="weixin"></a> -->
+      <a href="javascript:void(0);" class="ds-wechat fa fa-fw fa-wechat" data-cmd="weixin"></a>-->
       <div class="dlikeColBox">
         <div class="dlikeBox" @click="likecollectHandle(1)">
           <i :class="likeArt?'fa fa-fw fa-heart':'fa fa-fw fa-heart-o'"></i>
@@ -36,14 +36,13 @@
         <!-- <div class="dcollectBox" @click="likecollectHandle(2)">
           <i :class="collectArt?'fa fa-fw fa-star':'fa fa-fw fa-star-o'"></i>
           收藏 | {{detailObj.collects}}
-        </div> -->
+        </div>-->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getArticleInfo, initDate } from "../utils/server.js";
 import { detailArticle, getArtLikeCollect } from "@/api/article";
 import mdHtml from "../components/mdHtml.vue";
 
@@ -55,14 +54,21 @@ export default {
   data() {
     //选项 / 数据
     return {
-      aid: "", //文章ID
-      pdonate: true, //打开赞赏控制,
       detailObj: "", //返回详情数据
       likeArt: false, //是否点赞
       collectArt: false, //是否收藏
-      haslogin: false, //是否已经登录
       userId: "", //用户id
-      create_time: "",
+      metaInfo: {
+        title: "This is the test",
+        meta: [
+          { charset: "utf-8" },
+          {
+            name: "viewport",
+            content:
+              "width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=2,user-scalable=yes",
+          },
+        ],
+      }
     };
   },
   methods: {
@@ -102,7 +108,7 @@ export default {
       detailArticle(this.$route.query.url).then((result) => {
         this.detailObj = result.article;
       });
-    }
+    },
   },
   watch: {
     // 如果路由有变化，会再次执行该方法

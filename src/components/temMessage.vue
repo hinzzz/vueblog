@@ -2,9 +2,7 @@
 <template>
   <div class="tmsgBox" ref="tmsgBox">
     <div class="tmsg-respond" ref="respondBox">
-    <h3>
-      发表评论
-    </h3>
+      <h3>发表评论</h3>
     </div>
     <comment_editor></comment_editor>
 
@@ -26,12 +24,22 @@
                 </div>
               </header>
               <section>
-                <p >{{analyzeEmoji(item.content)}}</p>
-                <div :id="item.id" class="tmsg-replay" @click="respondMsg(item.id)">{{item.id==commentEditorId?"取消回复":"回复"}}</div>
-                <comment_editor v-for="(citem,cindex) in commentList" :key="'subcommon'+cindex" v-show="item.id==commentEditorId" :parentId="item.id" :articleId="item.articleId"></comment_editor>
+                <p>{{analyzeEmoji(item.content)}}</p>
+                <div
+                  :id="item.id"
+                  class="tmsg-replay"
+                  @click="respondMsg(item.id)"
+                >{{item.id==commentEditorId?"取消回复":"回复"}}</div>
+                <comment_editor
+                  v-for="(citem,cindex) in commentList"
+                  :key="'subcommon'+cindex"
+                  v-show="item.id==commentEditorId"
+                  :parentId="item.id"
+                  :articleId="item.articleId"
+                ></comment_editor>
               </section>
             </article>
-            <comment-list-data :item="item" ref="subCommentList" ></comment-list-data>
+            <comment-list-data :item="item" ref="subCommentList"></comment-list-data>
           </li>
         </ul>
       </div>
@@ -40,13 +48,6 @@
 </template>
 
 <script>
-import {
-  ArticleComment,
-  OtherComment,
-  setArticleComment,
-  setOuthComment,
-  initDate
-} from "../utils/server.js";
 import { getComment } from "../api/comment.js";
 import commentListData from "../components/commentList.vue";
 import commentEditor from "../components/commentEditor.vue";
@@ -66,7 +67,7 @@ export default {
         status: undefined,
         ascs: undefined,
         descs: undefined,
-        articleUrl: this.$route.query.url
+        articleUrl: this.$route.query.url,
       },
       respondBox: "", //评论表单
       tmsgBox: "", //总评论盒子
@@ -76,16 +77,16 @@ export default {
       commentList: "", //评论列表数据
       pageId: 0, //当前第几页
       haslogin: false,
-      userId: "" ,//用户id
-      OwOlist:OwOlist
+      userId: "", //用户id
+      OwOlist: OwOlist,
     };
   },
   methods: {
     //选择表情包
-    choseEmoji: function(inner) {
+    choseEmoji: function (inner) {
       this.textarea += "[" + inner + "]";
     },
-    analyzeEmoji: function(cont) {
+    analyzeEmoji: function (cont) {
       //编译表情替换成图片展示出来
       var pattern1 = /\[[\u4e00-\u9fa5]+\]/g;
       var pattern2 = /\[[\u4e00-\u9fa5]+\]/;
@@ -107,50 +108,53 @@ export default {
       }
       return str;
     },
-    updateCommentList:function(comment){
-      if(comment.parentId==0){
+    updateCommentList: function (comment) {
+      if (comment.parentId == 0) {
         this.commentList.push(comment);
-      }else{
+      } else {
         //this.reqUpdateCommentList(this.commentList,comment)
       }
-      console.log(this.commentList)
+      console.log(this.commentList);
     },
-    reqUpdateCommentList: function(commentList,comment){
-      commentList.forEach(subComment=>{
-        if(subComment.id==comment.parentId){
+    reqUpdateCommentList: function (commentList, comment) {
+      commentList.forEach((subComment) => {
+        if (subComment.id == comment.parentId) {
           subComment.comments.push(comment);
-        }else{
-          if(commentList.comments && commentList.comments.length>0){
-            this.reqUpdateCommentList(commentList.comments,comment);
+        } else {
+          if (commentList.comments && commentList.comments.length > 0) {
+            this.reqUpdateCommentList(commentList.comments, comment);
           }
         }
-      })
+      });
     },
-    resetRespond: function(subCommentList,commentEditorId){
-      subCommentList.forEach(comment=>{
-        if(commentEditorId!=comment.commentEditorId){
+    resetRespond: function (subCommentList, commentEditorId) {
+      subCommentList.forEach((comment) => {
+        if (commentEditorId != comment.commentEditorId) {
           comment.resetCommentEditorId();
         }
-        if(comment.$refs.subCommentList && comment.$refs.subCommentList.length>0){
-          this.resetRespond(comment.$refs.subCommentList,commentEditorId);
+        if (
+          comment.$refs.subCommentList &&
+          comment.$refs.subCommentList.length > 0
+        ) {
+          this.resetRespond(comment.$refs.subCommentList, commentEditorId);
         }
-      })
+      });
     },
-    rootResetRespond: function(commentEditorId,rootFlag){
+    rootResetRespond: function (commentEditorId, rootFlag) {
       this.resetCommentEditorId(rootFlag);
-      this.resetRespond(this.$refs.subCommentList,commentEditorId);
+      this.resetRespond(this.$refs.subCommentList, commentEditorId);
     },
-    resetCommentEditorId(rootFlag){
-      if(!rootFlag){
+    resetCommentEditorId(rootFlag) {
+      if (!rootFlag) {
         this.commentEditorId = 0;
       }
     },
-    respondMsg: function(commentEditorId) {
+    respondMsg: function (commentEditorId) {
       //回复留言
-      if(commentEditorId!=this.commentEditorId){
+      if (commentEditorId != this.commentEditorId) {
         this.commentEditorId = 0;
       }
-      this.rootResetRespond(commentEditorId,true);
+      this.rootResetRespond(commentEditorId, true);
       this.commentEditorId = this.commentEditorId == 0 ? commentEditorId : 0;
       if (!localStorage.getItem("userInfo")) {
         this.isRespond = true;
@@ -158,7 +162,7 @@ export default {
         this.$confirm("登录后即可点赞和收藏，是否前往登录页面?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         })
           .then(() => {
             //确定，跳转至登录页面
@@ -169,8 +173,8 @@ export default {
           .catch(() => {});
       }
     },
-    showCommentList: function(initData) {
-      getComment(this.listQuery).then(result => {
+    showCommentList: function (initData) {
+      getComment(this.listQuery).then((result) => {
         if (result && result.code == 200) {
           this.commentList = result.comment.records;
 
@@ -183,15 +187,15 @@ export default {
       });
     },
 
-    routeChange: function() {
+    routeChange: function () {
       //重新加载
       this.showCommentList(true);
-    }
+    },
   },
   components: {
     //定义组件
     "comment-list-data": commentListData,
-    comment_editor: commentEditor
+    comment_editor: commentEditor,
   },
   watch: {
     // 如果路由有变化，会再次执行该方法
@@ -204,7 +208,7 @@ export default {
   },
   mounted() {
     //页面加载完成后
-  }
+  },
 };
 </script>
 
