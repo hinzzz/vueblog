@@ -51,6 +51,15 @@ export default {
     //定义组件
     "md-html": mdHtml,
   },
+  metaInfo() {
+    return {
+      title: this.metaData.title,
+      meta: [{                 // set meta
+        name: 'description',
+        content: this.metaData.description
+      }]
+    };
+  },
   data() {
     //选项 / 数据
     return {
@@ -58,17 +67,10 @@ export default {
       likeArt: false, //是否点赞
       collectArt: false, //是否收藏
       userId: "", //用户id
-      metaInfo: {
-        title: "This is the test",
-        meta: [
-          { charset: "utf-8" },
-          {
-            name: "viewport",
-            content:
-              "width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=2,user-scalable=yes",
-          },
-        ],
-      }
+      metaData: {
+        title: "hinz′s java技术栈",
+        description:"hinz′s java技术栈 专注于 Java, Spring, SpringCloud, SpringCloud Alibaba, Mysql, MyBatis, Redis  以及其他分布式技术等",
+      },
     };
   },
   methods: {
@@ -107,6 +109,8 @@ export default {
       //获取详情接口
       detailArticle(this.$route.query.url).then((result) => {
         this.detailObj = result.article;
+        this.metaData.title = this.detailObj.title;
+        this.metaData.description = this.detailObj.description;
       });
     },
   },
@@ -114,8 +118,7 @@ export default {
     // 如果路由有变化，会再次执行该方法
     $route: "routeChange",
   },
-  created() {
-    //生命周期函数
+  beforeMount() {
     this.routeChange();
   },
 };

@@ -8,14 +8,18 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/style.less'
 import store from './store'
 import moment from 'moment'
-import Meta from 'vue-meta';
+// import MetaInfo from 'vue-meta-info';
 
+// Vue.use(MetaInfo);
+import VueMeta from 'vue-meta'
+Vue.use(VueMeta)
 Vue.prototype.$moment = moment
 moment.suppressDeprecationWarnings = true;
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
-Vue.use(Meta);
+
+
 
 
 /* eslint-disable no-new */
@@ -26,4 +30,5 @@ new Vue({
   template: '<App/>',
   store,
 })
+
 
