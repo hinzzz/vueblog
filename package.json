@@ -1,7 +1,7 @@
 {
-  "name": "myblogvue",
+  "name": "javablog",
   "version": "1.0.0",
-  "description": "java,redis,mysql,mq",
+  "description": "hinz′s java技术栈 专注于 Java, Spring, SpringCloud, SpringCloud Alibaba, Mysql, MyBatis, Redis  以及其他分布式技术等",
   "author": "hinzzz",
   "private": true,
   "scripts": {
