@@ -107,7 +107,7 @@ export default {
     },
     //查看文章
     toDetailArticle: function (url) {
-      this.$router.push({ name: "detail", query: { url: url + ".md" } });
+      this.$router.push({ name: "artilce", query: { url: url + ".md" } });
     },
     routeChange: function () {
       this.getList();

@@ -51,7 +51,7 @@ export default new Router({
 			meta: {
 				auth: true
 			},
-			name: 'detail'
+			name: 'artilce'
 		}, //文章详情
 		{
 			path: '/Aboutme',
