@@ -9,7 +9,7 @@ export const state = {
   loading: false,
   themeObj: 0,
   aboutmeObj:'',
-  host:"http://localhost",
+  host:"http://120.79.48.191",
   git:"https://github.com/hinzzz",
   email:"157957329@qq.com",
   deployTime:"2020/08/08 08:08:08",
