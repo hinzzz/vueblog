@@ -5,7 +5,7 @@
         </div>
         <div class="fcontainer">
             <p>
-                光阴长河 <span v-html='longTime'>{{longTime}}</span><span class="timeJump">(●'◡'●)ﾉ♥</span>
+                春秋只转载要事 <span v-html='longTime'>{{longTime}}</span><span class="timeJump">(●'◡'●)ﾉ♥</span>
             </p>
             <p>
                 {{$store.state.banquan}}  <a :href="this.$store.state.beianUrl" target="_blank">{{$store.state.beianHao}}</a>.

@@ -30,7 +30,23 @@ export default new Router({
 			name: 'Home'
 		}, //首页
 		{
+			path: '/cat/:cat',
+			component: resolve => require(['../views/Home.vue'], resolve),
+			meta: {
+				auth: true
+			},
+			name: 'Home'
+		}, //首页
+		{
 			path: '/Home',
+			component: resolve => require(['../views/Home.vue'], resolve),
+			meta: {
+				auth: true
+			},
+			name: 'Home'
+		}, //首页
+		{
+			path: '/search/:q',
 			component: resolve => require(['../views/Home.vue'], resolve),
 			meta: {
 				auth: true

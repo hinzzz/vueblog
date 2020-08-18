@@ -97,8 +97,8 @@ export default {
     // 获得数据集合
     getList() {
       this.listLoading = true;
-      this.listQuery.cat = this.$route.query.cat;
-      this.listQuery.q = this.$route.query.q;
+      this.listQuery.cat = this.$route.params.cat;
+      this.listQuery.q = this.$route.params.q;
       getArticle(this.listQuery).then((response) => {
         this.articleList = response.page.records;
         this.total = response.page.total;

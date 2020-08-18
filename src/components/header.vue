@@ -85,17 +85,10 @@ export default {
       }
     },
     searchEnterFun: function (e) {
-      //input 输入 enter
       var keyCode = window.event ? e.keyCode : e.which;
-      // console.log('CLICK', this.input, keyCode)
-      //  console.log('回车搜索',keyCode,e);
       if (this.input) {
         this.$store.state.keywords = this.input;
-        if (window.location.href.indexOf("?") > 0) {
-          window.location.href = window.location.href + "&q=" + this.input;
-        } else {
-          window.location.href = window.location.href + "?q=" + this.input;
-        }
+        this.$router.push("/search/"+this.input)
       }
     },
     handleSelect(key, keyPath) {
