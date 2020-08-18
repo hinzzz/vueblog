@@ -14,7 +14,7 @@
             <i></i>
           </a>
           <h2>
-            <a v-on:click.stop="toDetailArticle(item.url)" :title="item.title">{{item.title}}</a>
+            <a :href="'/detail/'+item.url" :title="item.title">{{item.title}}</a>
           </h2>
         </header>
         <p class="meta">
@@ -104,10 +104,6 @@ export default {
         this.total = response.page.total;
         this.listLoading = false;
       });
-    },
-    //查看文章
-    toDetailArticle: function (url) {
-      this.$router.push({ name: "artilce", query: { url: url + ".md" } });
     },
     routeChange: function () {
       this.getList();

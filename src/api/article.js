@@ -19,7 +19,7 @@ export function putArticle(id) {
 
 export function detailArticle(artilceUrl){
   return request({
-    url: '/'+artilceUrl,
+    url: '/detail/'+artilceUrl,
     method: 'get'
   })
 }

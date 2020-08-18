@@ -107,7 +107,7 @@ export default {
     },
     routeChange: function () {
       //获取详情接口
-      detailArticle(this.$route.query.url).then((result) => {
+      detailArticle(this.$route.params.id).then((result) => {
         this.detailObj = result.article;
         this.metaData.title = this.detailObj.title;
         this.metaData.description = this.detailObj.description;

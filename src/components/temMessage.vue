@@ -67,7 +67,7 @@ export default {
         status: undefined,
         ascs: undefined,
         descs: undefined,
-        articleUrl: this.$route.query.url,
+        articleUrl: this.$route.params.id,
       },
       respondBox: "", //评论表单
       tmsgBox: "", //总评论盒子
@@ -114,7 +114,6 @@ export default {
       } else {
         //this.reqUpdateCommentList(this.commentList,comment)
       }
-      console.log(this.commentList);
     },
     reqUpdateCommentList: function (commentList, comment) {
       commentList.forEach((subComment) => {

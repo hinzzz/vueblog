@@ -46,12 +46,12 @@ export default new Router({
 			name: 'Share'
 		}, //文章列表
 		{
-			path: '/artilce',
+			path: '/detail/:id',
 			component: resolve => require(['../views/DetailShare.vue'], resolve),
 			meta: {
 				auth: true
 			},
-			name: 'artilce'
+			name: 'detail'
 		}, //文章详情
 		{
 			path: '/Aboutme',
