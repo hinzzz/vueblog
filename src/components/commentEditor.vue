@@ -5,7 +5,7 @@
       <input type="hidden" name="parentId" v-model="parentId" />
       <input type="hidden" name="articleId" v-model="articleId" />
       <el-input type="textarea" :rows="2" placeholder="说点什么呢``" v-model="content"></el-input>
-      <div :class="pBody?'OwO':'OwO OwO-open'">
+      <!-- <div :class="pBody?'OwO':'OwO OwO-open'">
         <div class="OwO-logo" @click="pBody=!pBody">
           <span>OwO表情</span>
         </div>
@@ -26,7 +26,7 @@
             </ul>
           </div>
         </div>
-      </div>
+      </div> -->
       <el-row class="tmsg-r-info">
         <el-col :span="24" class="info-submit">
           <p class="tcolors-bg" @click="sendMsg">{{sendTip}}</p>
@@ -38,7 +38,7 @@
 
 <script>
 import { postComment } from "../api/comment.js";
-import { OwOlist } from "../utils/config.js";
+// import { OwOlist } from "../utils/config.js";
 
 export default {
   name: "commentEditor",
@@ -58,7 +58,7 @@ export default {
       content: "", //文本框输入内容
       pBody: true, //表情打开控制
       sendTip: "发送~",
-      OwOlist: OwOlist
+      //OwOlist: OwOlist
     };
   },
   //监听属性 类似于data概念
