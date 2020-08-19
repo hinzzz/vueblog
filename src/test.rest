@@ -1,0 +1,28 @@
+### GET
+GET http://localhost:8080/coffee/
+
+### POST
+POST http://localhost:8080/order/ HTTP/1.1
+content-type: application/json
+
+{
+    "customer": "latte",
+    "items": ["1","2"]
+}
+
+-----------------------------------------------
+Response:
+
+HTTP/1.1 201 
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 14 Jun 2019 15:27:36 GMT
+
+{
+  "id": 1,
+  "createTime": "2019-06-14T15:27:36.969+0000",
+  "updateTime": "2019-06-14T15:27:36.969+0000",
+  "customer": "latte",
+  "items": [],
+  "state": "INIT"
+}
