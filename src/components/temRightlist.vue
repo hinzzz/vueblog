@@ -4,7 +4,7 @@
     <section :class="fixDo?'rs2 fixed':'rs2'" >
         <div class="r1-head">
         <img
-          :src="this.$store.state.themeObj.center_smailimg?this.$store.state.themeObj.center_smailimg:'static/img/headtou02.jpg'"
+          :src="this.$store.state.themeObj.center_smailimg?this.$store.state.themeObj.center_smailimg:'/static/img/headtou02.jpg'"
           alt
         />
         <h1 v-if="this.$store.state.themeObj.user_start!=0">
@@ -48,13 +48,13 @@
       @click="toTopfun"
     >
       <img
-        :src="this.$store.state.themeObj.right_img?this.$store.state.themeObj.right_img:'static/img/scroll.png'"
+        :src="this.$store.state.themeObj.right_img?this.$store.state.themeObj.right_img:'/static/img/scroll.png'"
         alt
       />
     </div>
     <div v-else :class="gotoTop?'toTophui hidden':'toTophui goTophui hidden'" @click="toTopfun">
       <img
-        :src="this.$store.state.themeObj.right_img?this.$store.state.themeObj.right_img:'static/img/scroll.png'"
+        :src="this.$store.state.themeObj.right_img?this.$store.state.themeObj.right_img:'/static/img/scroll.png'"
         alt
       />
     </div>

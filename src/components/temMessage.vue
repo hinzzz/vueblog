@@ -102,7 +102,7 @@ export default {
           }
           str = str.replace(
             pattern2,
-            '<img src="static/img/emot/image/' + src + '"/>'
+            '<img src="/static/img/emot/image/' + src + '"/>'
           );
         }
       }

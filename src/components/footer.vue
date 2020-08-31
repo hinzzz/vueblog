@@ -1,7 +1,7 @@
 <!-- 底部公用 -->
 <template>
     <div  class="footBack footBackQian">
-        <div class="footer-img" :style="{background:this.$store.state.themeObj.bottom_img?'url('+this.$store.state.themeObj.bottom_img+') no-repeat 50%':'url(static/img/footer01.png) no-repeat 50%'}">
+        <div class="footer-img" :style="{background:this.$store.state.themeObj.bottom_img?'url('+this.$store.state.themeObj.bottom_img+') no-repeat 50%':'url(/static/img/footer01.png) no-repeat 50%'}">
         </div>
         <div class="fcontainer">
             <p>
@@ -11,7 +11,7 @@
                 {{$store.state.banquan}}  <a :href="this.$store.state.beianUrl" target="_blank">{{$store.state.beianHao}}</a>.
             </p>
             <p>
-                <span>Made with</span> <img class="fheart" src="static/img/heart02.png"/>  <span>by <a :href="this.$store.state.host" target="_blank">hinzzz.</a></span>
+                <span>Made with</span> <img class="fheart" src="/static/img/heart02.png"/>  <span>by <a :href="this.$store.state.host" target="_blank">hinzzz.</a></span>
             </p>
         </div>
     </div>
@@ -22,7 +22,7 @@
     export default {
         data() { //选项 / 数据
             return {
-                footBg:"url(static/img/footer01.png) no-repeat 50%",//底部图片
+                footBg:"url(/static/img/footer01.png) no-repeat 50%",//底部图片
                 longTime:'',
             }
         },

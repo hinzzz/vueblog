@@ -62,7 +62,7 @@ export default {
       pMenu: true, //手机端菜单打开
       // path:'',//当前打开页面的路径
       input: "", //input输入内容
-      headBg: "url(static/img/headbg05.jpg)", //头部背景图
+      headBg: "url(/static/img/headbg05.jpg)", //头部背景图
     };
   },
   watch: {},

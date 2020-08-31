@@ -5,28 +5,6 @@
       <input type="hidden" name="parentId" v-model="parentId" />
       <input type="hidden" name="articleId" v-model="articleId" />
       <el-input type="textarea" :rows="2" placeholder="说点什么呢``" v-model="content"></el-input>
-      <!-- <div :class="pBody?'OwO':'OwO OwO-open'">
-        <div class="OwO-logo" @click="pBody=!pBody">
-          <span>OwO表情</span>
-        </div>
-        <div class="OwO-body">
-          <ul class="OwO-items OwO-items-show">
-            <li
-              class="OwO-item"
-              v-for="(oitem,index) in OwOlist"
-              :key="'oitem'+index"
-              @click="choseEmoji(oitem.title)"
-            >
-              <img :src="'static/img/emot/image/'+oitem.url" alt />
-            </li>
-          </ul>
-          <div class="OwO-bar">
-            <ul class="OwO-packages">
-              <li class="OwO-package-active">Emoji</li>
-            </ul>
-          </div>
-        </div>
-      </div> -->
       <el-row class="tmsg-r-info">
         <el-col :span="24" class="info-submit">
           <p class="tcolors-bg" @click="sendMsg">{{sendTip}}</p>
