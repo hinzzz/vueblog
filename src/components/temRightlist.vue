@@ -1,9 +1,8 @@
 <!-- 右侧固定导航栏 -->
 <template>
-
   <div class="rightlistBox">
-    <section class="rs2 fixed" >
-        <div class="r1-head">
+    <section class="rs2 fixed">
+      <div class="r1-head">
         <img
           :src="this.$store.state.themeObj.center_smailimg?this.$store.state.themeObj.center_smailimg:'/static/img/headtou02.jpg'"
           alt
@@ -22,7 +21,7 @@
               </a>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" :content="$store.state.email" placement="top">
-              <a href="javascript:void(0)"    >
+              <a href="javascript:void(0)">
                 <i class="fa fa-fw fa-qq"></i>
               </a>
             </el-tooltip>
@@ -30,18 +29,21 @@
         </div>
       </div>
       <section class="midle_section"></section>
-      <div class="widget widget_categories" >
+      <div class="widget widget_categories">
         <h3>分类目录</h3>
         <ul>
           <li v-for="(item,index) in categoryList" :key="'index'+index" class="cat-item">
-            <a :href="$store.state.host+'/cat/'+item.url" :title="item.description" v-html="item.name"></a>
+            <a
+              :href="$store.state.host+'/cat/'+item.url"
+              :title="item.description"
+              v-html="item.name"
+            ></a>
             ({{item.total}})
           </li>
         </ul>
       </div>
     </section>
 
-    
     <!-- 右侧上滑小图片 -->
     <div
       v-if="this.$store.state.themeObj.user_start!=0"
@@ -69,7 +71,7 @@ export default {
   data() {
     //选项 / 数据
     return {
-      categoryList:null,
+      categoryList: null,
       fixDo: false,
       loveme: false,
       gotoTop: false, //返回顶部
@@ -78,7 +80,6 @@ export default {
       artCommentList: "", //评论量最多
       likeNum: 0, //do you like me 点击量
       initLikeNum: 0, //初始化喜欢数量
-      isAimee: this.$store.state.themeObj.user_start != 0 ? "Aimee" : "Qinlh", //判断是哪个的博客
     };
   },
   methods: {
@@ -118,18 +119,13 @@ export default {
           that.gotoTop = false;
         }
       }
-      if (t > 1200) {
-        that.fixDo = true;
-      } else {
-        that.fixDo = false;
-      }
     };
   },
-  mounted(){
-      getCategory().then(response=>{
-          this.categoryList = response.category;
-      })
-  }
+  mounted() {
+    getCategory().then((response) => {
+      this.categoryList = response.category;
+    });
+  },
 };
 </script>
 
@@ -138,8 +134,8 @@ body {
   font-family: "Microsoft Yahei";
   color: #555;
 }
-.midle_section{
-    background-color: #efefef !important;
+.midle_section {
+  background-color: #efefef !important;
 }
 h3 {
   display: block;

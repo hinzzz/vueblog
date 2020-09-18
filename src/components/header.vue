@@ -47,7 +47,6 @@
   </div>
 </template>
 <script>
-
 import { getCategory } from "@/api/category";
 
 export default {
@@ -88,7 +87,7 @@ export default {
       var keyCode = window.event ? e.keyCode : e.which;
       if (this.input) {
         this.$store.state.keywords = this.input;
-        this.$router.push("/search/"+this.input)
+        this.$router.push("/search/" + this.input);
       }
     },
     handleSelect(key, keyPath) {
@@ -117,9 +116,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       })
-        .then(() => {
-        
-        })
+        .then(() => {})
         .catch(() => {
           //
         });
@@ -174,10 +171,8 @@ export default {
     );
 
     this.routeChange();
-
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 

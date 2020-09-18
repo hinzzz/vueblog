@@ -40,7 +40,6 @@
 import commentEditor from "../components/commentEditor.vue";
 
 export default {
-  //import引入的组件需要注入到对象中才能使用
   name: "commentListData",
   props: {
     item: {
@@ -50,23 +49,18 @@ export default {
   },
   components: { comment_editor: commentEditor },
   data() {
-    //这里存放数据
     return {
       haslogin: this.$parent.haslogin,
       commentEditorId:0
     };
   },
-  //监听属性 类似于data概念
   computed: {},
-  //监控data中的数据变化
   watch: {},
-  //方法集合
   methods: {
     analyzeEmoji: function(content) {
       return this.$parent.analyzeEmoji(content);
     },
     updateCommentList:function(subComment){
-      console.log(subComment.parentId)
       if(subComment.parentId==0){
         this.$parent.updateCommentList(subComment);
       }else {

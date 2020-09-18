@@ -64,7 +64,7 @@
 
 <script>
 import { getArticle, detailArticle } from "@/api/article";
-import { scrollTo } from '@/utils/scrollTo'
+import { scrollTo } from "@/utils/scrollTo";
 
 export default {
   name: "Share",
@@ -118,7 +118,7 @@ export default {
     },
     handleCurrentChange(val) {
       this.listQuery.current = val;
-      this.listQuery.size = this.pageSize ;
+      this.listQuery.size = this.pageSize;
       this.getList();
       if (this.autoScroll) {
         scrollTo(0, 800);
@@ -140,12 +140,12 @@ export default {
     currentPage: {
       get() {
         return this.page;
-      }
+      },
     },
     pageSize: {
       get() {
         return this.limit;
-      }
+      },
     },
   },
 };
@@ -155,7 +155,7 @@ export default {
 .pagination-container {
   background: #efefef;
   padding: 32px 16px;
-  text-align:center;
+  text-align: center;
 }
 .pagination-container.hidden {
   display: none;

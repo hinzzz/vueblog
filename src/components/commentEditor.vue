@@ -16,7 +16,6 @@
 
 <script>
 import { postComment } from "../api/comment.js";
-// import { OwOlist } from "../utils/config.js";
 
 export default {
   name: "commentEditor",
@@ -36,18 +35,12 @@ export default {
       content: "", //文本框输入内容
       pBody: true, //表情打开控制
       sendTip: "发送~",
-      //OwOlist: OwOlist
     };
   },
-  //监听属性 类似于data概念
   computed: {},
-  //监控data中的数据变化
   watch: {},
   //方法集合
   methods: {
-    choseEmoji: function(inner) {
-      this.content += "[" + inner + "]";
-    },
     updateCommentList: function(comment){
       this.$parent.updateCommentList(comment);
     },
@@ -62,7 +55,6 @@ export default {
           articleId: this.articleId
         }).then(result => {
           if (result && result.code == 200) {
-            //this.$parent.respondMsg(result.comment.parentId)
             this.updateCommentList(result.comment)
             this.$notify({
               title: "评论",
