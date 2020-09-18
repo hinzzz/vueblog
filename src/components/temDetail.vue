@@ -22,21 +22,14 @@
         </span>
       </h2>
     </header>
-    <md-html :content="detailObj.content"></md-html>
+    <side-catalog class="catalog" v-if="this.detailObj.content" v-bind="catalogProps"></side-catalog>
+    <div class="markdown-body" v-html="this.detailObj.content" id="md"></div>
     <div class="dshareBox bdsharebuttonbox" data-tag="share_1">
-      <!-- 分享到:
-      <a href="javascript:void(0);" class="ds-weibo fa fa-fw fa-weibo" data-cmd="tsina"></a>
-      <a href="javascript:void(0);" class="ds-qq fa fa-fw fa-qq" data-cmd="tqq"></a>
-      <a href="javascript:void(0);" class="ds-wechat fa fa-fw fa-wechat" data-cmd="weixin"></a>-->
       <div class="dlikeColBox">
         <div class="dlikeBox" @click="likecollectHandle(1)">
           <i :class="likeArt?'fa fa-fw fa-heart':'fa fa-fw fa-heart-o'"></i>
           点赞 | {{detailObj.likes}}
         </div>
-        <!-- <div class="dcollectBox" @click="likecollectHandle(2)">
-          <i :class="collectArt?'fa fa-fw fa-star':'fa fa-fw fa-star-o'"></i>
-          收藏 | {{detailObj.collects}}
-        </div>-->
       </div>
     </div>
   </div>
@@ -45,32 +38,36 @@
 <script>
 import { detailArticle, getArtLikeCollect } from "@/api/article";
 import mdHtml from "../components/mdHtml.vue";
+import SideCatalog from "vue-side-catalog";
+import "vue-side-catalog/lib/vue-side-catalog.css";
+
+import hljs from "highlight.js";
+import "highlight.js/styles/idea.css";
+import "@/assets/css/github-markdown.css";
+
+const highlightCode = () => {
+  const preEl = document.querySelectorAll("pre");
+
+  preEl.forEach((el) => {
+    hljs.highlightBlock(el);
+  });
+};
 
 export default {
   components: {
-    //定义组件
-    "md-html": mdHtml,
+    SideCatalog,
+    mdHtml,
   },
-  metaInfo() {
-    return {
-      title: this.metaData.title,
-      meta: [{                 // set meta
-        name: 'description',
-        content: this.metaData.description
-      }]
-    };
-  },
+
   data() {
-    //选项 / 数据
     return {
+      catalogProps: {
+        container: "#md",
+      },
       detailObj: "", //返回详情数据
       likeArt: false, //是否点赞
       collectArt: false, //是否收藏
       userId: "", //用户id
-      metaData: {
-        title: "hinz′s java技术栈",
-        description:"hinz′s java技术栈 专注于 Java, Spring, SpringCloud, SpringCloud Alibaba, Mysql, MyBatis, Redis  以及其他分布式技术等",
-      },
     };
   },
   methods: {
@@ -105,26 +102,35 @@ export default {
       }
       getArtLikeCollect(islike, this.detailObj.id, operFlag);
     },
-    routeChange: function () {
-      //获取详情接口
-      detailArticle(this.$route.params.id).then((result) => {
-        this.detailObj = result.article;
-        this.metaData.title = this.detailObj.title;
-        this.metaData.description = this.detailObj.description;
-      });
-    },
-  },
-  watch: {
-    // 如果路由有变化，会再次执行该方法
-    $route: "routeChange",
   },
   mounted() {
-    this.routeChange();
+    //获取详情接口
+    detailArticle(this.$route.params.id).then((result) => {
+      this.detailObj = result.article;
+    });
   },
 };
 </script>
 
 <style lang="less">
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+}
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
+  }
+}
+.catalog {
+  position: fixed;
+  top: 10%;
+  left: 10px;
+  width: 18%;
+}
 .detailBox .article-content {
   font-size: 15px;
   white-space: normal;

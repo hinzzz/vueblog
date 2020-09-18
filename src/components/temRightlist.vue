@@ -1,7 +1,8 @@
 <!-- 右侧固定导航栏 -->
 <template>
+
   <div class="rightlistBox">
-    <section :class="fixDo?'rs2 fixed':'rs2'" >
+    <section class="rs2 fixed" >
         <div class="r1-head">
         <img
           :src="this.$store.state.themeObj.center_smailimg?this.$store.state.themeObj.center_smailimg:'/static/img/headtou02.jpg'"
@@ -187,7 +188,8 @@ h3 {
   overflow: hidden;
 }
 .rightlistBox {
-  position: relative;
+  position: fixed;
+  top: 10%;
 }
 .rightlistBox section {
   transition: all 0.2s linear;

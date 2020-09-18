@@ -172,23 +172,7 @@ export default {
       /hidden/i,
       "visibilitychange"
     );
-    var onVisibilityChange = function () {
-      if (document[hiddenProperty]) {
-        //被隐藏
-        document.title = "藏好啦(つд⊂)";
-      } else {
-        document.title = "被发现啦(*´∇｀*)"; //当前窗口打开
-        if (this.$route.path != "/DetailShare") {
-          if (localStorage.getItem("userInfo")) {
-            this.haslogin = true;
-          } else {
-            this.haslogin = false;
-          }
-        }
-      }
-    };
-    document.addEventListener(visibilityChangeEvent, onVisibilityChange);
-    // console.log();
+
     this.routeChange();
 
   },
