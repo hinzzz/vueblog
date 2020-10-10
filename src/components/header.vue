@@ -34,6 +34,22 @@
               </div>
             </el-menu>
           </div>
+          <!-- 移动端导航 -->
+				<div class="mobileBox">
+					<div class="hideMenu">
+						<i @click="pMenu=!pMenu" class="el-icon-menu"></i>
+						<el-collapse-transition>
+							<el-menu :default-active="activeIndex" class="mlistmenu" v-show="!pMenu" theme="dark" @open="handleOpen" @close="handleClose" :unique-opened="true" :router="true">
+								<el-menu-item index="/"><i class="fa fa-wa fa-home"></i> 首页</el-menu-item>
+								<el-menu-item index="/Aboutme"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
+							</el-menu>
+						</el-collapse-transition>
+						<div class="searchBox">
+							<el-input placeholder="" icon="search" v-model="input" @keyup.enter.native="searchEnterFun" :on-icon-click="searchEnterFun" @change="searchChangeFun">
+							</el-input>
+						</div>
+					</div>
+				</div>
         </el-col>
       </el-row>
     </div>

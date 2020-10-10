@@ -62,13 +62,5 @@ export default new Router({
 			},
 			name: 'Aboutme'
 		}, //关于	
-		{
-			path: '/catalogue',
-			component: resolve => require(['../views/catalogue.vue'], resolve),
-			meta: {
-				auth: true
-			},
-			name: 'catalogue'
-		}, //目录测试	
 	]
 })

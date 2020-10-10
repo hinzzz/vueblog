@@ -6,7 +6,7 @@
     </div>
     <comment_editor></comment_editor>
 
-    <div class="tmsg-comments" ref="listDom">
+    <div  id="comments" class="tmsg-comments" ref="listDom">
       <a href="#" class="tmsg-comments-tip">活捉 {{commentList?commentList.length:0}} 条</a>
       <div class="tmsg-commentshow">
         <ul class="tmsg-commentlist">

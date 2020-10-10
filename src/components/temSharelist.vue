@@ -30,7 +30,7 @@
             <i class="fa fa-eye"></i>
             阅读({{item.visits}})
           </span>
-          <a class="pc" v-on:click.stop="toDetailArticle(item.url)">
+          <a class="pc" :href="'/detail/'+item.url+'#comments'">
             <i class="fa fa-comments-o"></i>
             评论({{item.comments}})
           </a>
