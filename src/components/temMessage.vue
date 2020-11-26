@@ -202,7 +202,7 @@ export default {
   },
   created() {
     //生命周期函数
-    // console.log(this.$route); 
+    // console.log(this.$route);
     this.routeChange();
   },
   mounted() {
